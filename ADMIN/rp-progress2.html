@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- External CSS Stylesheet -->  <link rel="stylesheet" href="/Computer-Lab-Smart-Maintenance-System/CSS/design.css">
+  <link rel="stylesheet" href="/Computer-Lab-Smart-Maintenance-System/CSS/responsive.css">
+  <link rel='stylesheet' href='/Computer-Lab-Smart-Maintenance-System/CSS/logout.css'>
+  <link rel='stylesheet' href='/Computer-Lab-Smart-Maintenance-System/CSS/custom-cards.css'>
+  <link rel='stylesheet' href='/Computer-Lab-Smart-Maintenance-System/CSS/scrollable-content.css'>
+  <!-- Boxicons Icon Library -->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href='/Computer-Lab-Smart-Maintenance-System/ADMIN/CSS/pc.css' rel='stylesheet'>
+  <link href='/Computer-Lab-Smart-Maintenance-System/ADMIN/CSS/repair-progress.css' rel='stylesheet'>
+  <link href='/Computer-Lab-Smart-Maintenance-System/ADMIN/CSS/view-details.css' rel='stylesheet'>
+  <link href='/Computer-Lab-Smart-Maintenance-System/ADMIN/CSS/content-scrollable.css' rel='stylesheet'>
+  <link href='/Computer-Lab-Smart-Maintenance-System/ADMIN/CSS/pc-grid-container.css' rel='stylesheet'>
+
+  <title>Gordon College - Dashboard</title>
+</head>
+
+
+<body>
+
+  <!-- ===================================
+     SIDEBAR NAVIGATION
+     =================================== -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- College Logo and Title -->
+    <a href="#" class="sidebar__brand">
+      <img src="../icons/logo-image.png" alt="Gordon College Logo" class="sidebar__logo">
+      <span class="sidebar__title">L A B G U A R D</span>
+    </a>
+
+    <!-- Main Navigation Menu -->
+    <ul class="sidebar__menu sidebar__menu--main">
+
+      <!-- User Profile -->
+      <li class="sidebar__item ">
+        <a href="structure-admin-iverson.html" class="sidebar__link">
+          <i class='bx bxs-user-rectangle'></i>
+          <span class="sidebar__text">PROFILE</span>
+        </a>
+      </li>
+            <!-- Dashboard -->
+      <li class="sidebar__item sidebar__item">
+        <a href="statistic-admin.html" class="sidebar__link">
+          <i class='bx bxs-user-rectangle'></i>
+          <span class="sidebar__text">DASHBOARD</span>
+        </a>
+      </li>
+      <!-- Borrower Management -->
+      <li class="sidebar__item ">
+        <a href="borrow-dashboard-admin-iverson.html" class="sidebar__link">
+          <i class='bx bxs-receipt '></i>
+          <span class="sidebar__text">BORROWER</span>
+        </a>
+      </li>
+      <!-- Report and Request System -->
+      <li class="sidebar__item ">
+        <a href="report-dashboard-faculty-admin-iverson.html" class="sidebar__link">
+          <i class='bx bxs-copy-alt'></i>
+          <span class="sidebar__text">REPORT / REQUEST</span>
+        </a>
+      </li>
+      <!-- Repair Progress Tracker -->
+      <li class="sidebar__item sidebar__item--active">
+        <a href="#" class="sidebar__link">
+          <i class='bx bxs-doughnut-chart'></i>
+          <span class="sidebar__text">REPAIR PROGRESS</span>
+        </a>
+      </li>
+      <!-- Request Status Monitor -->
+      <li class="sidebar__item">
+        <a href="request-status-dashboard-faculty-admin-iverson.html" class="sidebar__link">
+          <i class='bx bxs-group'></i>
+          <span class="sidebar__text">REQUEST STATUS</span>
+        </a>
+      </li>
+      <li class="sidebar__item ">
+        <a href="borrow-status-admin-iverson.html" class="sidebar__link">
+          <i class='bx bxs-group'></i>
+          <span class="sidebar__text">BORROW STATUS</span>
+        </a>
+      </li>
+
+    </ul>
+    <!-- Logout Option -->
+    <ul class="sidebar__menu sidebar__menu--bottom">
+      <li class="sidebar__item logout-button">
+        <a href="#" class="sidebar__link sidebar__link--logout">
+          <i class='bx bxs-log-out-circle'></i>
+          <span class="sidebar__text">Logout</span>
+        </a>
+      </li>
+    </ul>
+
+  </aside>
+  <!-- End of SIDEBAR NAVIGATION -->
+  <!-- End of SIDEBAR NAVIGATION -->
+
+
+  <!-- ===================================
+     UPPER BAR NAVIGATION
+     =================================== -->
+  <main class="main" id="content">
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+      <!-- Left Side of Navigation -->
+      <div class="navbar__left">
+        <!-- Menu Toggle Button -->
+        <i class='bx bx-menu navbar__toggle'></i>
+        <!-- Dashboard Link -->
+        <a href="#" class="navbar__link"></a>
+      </div>
+
+      <!-- Dark/Light Mode Toggle -->
+      <input id="theme-switch" hidden>
+    </nav>
+    <!-- End of Top Navigation Bar -->
+
+
+
+    <!-- ===================================
+                        Main Content Container
+                        =================================== -->
+    <div class="body">
+      <!-- Main content wrapper -->
+      <div class="content-wrapper">
+
+        <!-- Summary Cards Section - Shows key metrics -->
+        <div class="summary-cards">
+          <!-- Total Rooms Card -->
+          <div class="summary-card">
+            <h3>Total Rooms</h3>
+            <span class="room-total count">value</span>
+          </div>
+
+          <!-- Total PC Card -->
+          <div class="summary-card">
+            <h3>Total PC</h3>
+            <span class="pc-totals count">value</span>
+          </div>
+
+          <!-- Total Available PC Card -->
+          <div class="summary-card">
+            <h3 style="font-size: 12px;">Total Available PC</h3>
+            <span class="pc-totals-available count">value</span>
+          </div>
+        </div>
+
+        <!-- Main Content Area - Two Column Layout -->
+        <div class="main-content">          <!-- PC Specifications Panel - Left Column -->
+          <div class="pc-details-panel">
+
+
+            <!-- Panel Header with PC Identifier -->
+            <div class="panel-header">
+              <h2 class="room-label">VALUE</h2>
+            </div>
+
+
+
+            <!-- ===================================
+                            ---------"MAIN BODY"---------"
+                        =================================== -->
+            <div class="panel-content">
+              <!-- PC Grid Container - Displays PCs as circular elements -->
+              <!--       <h3 class="section-title">SPECIFICATION</h3>   -->
+
+
+            </div>            
+            
+            <h3 class="section-title">PC LIST</h3>
+
+            <!-- PC Grid Scrollable Container -->
+            <div class="pc-grid-container">
+              <!-- PC Grid Container -->
+              <div class="pc-grid">
+                <!-- Row 1 -->
+                <!-- PC-1 -->
+  
+              </div>
+            </div>
+
+
+
+
+          </div><!-- End of PC Specifications Panel -->
+
+          <!-- Rooms Panel - Right Column -->
+          <div class="rooms-panel">
+            <!-- Panel Title -->
+            <h2>ROOMS</h2>
+
+            <!-- Room Selection Grid -->
+            <div class="room-grid">
+              <!-- Each div.room-btn represents a clickable room button -->
+              <!-- When clicked, it will show the PC data for that room -->
+
+            </div><!-- End of Room Grid -->
+          </div><!-- End of Rooms Panel -->
+        </div><!-- End of Main Content Area -->
+      </div><!-- End of Content Wrapper -->
+    </div><!-- End of Body -->
+
+
+
+
+
+  </main>
+  <!-- End of MAIN CONTENT AREA -->
+
+
+
+  <!-- Firebase JS -->
+  <script type="module" src="backend/reportForm-admin-iverson.js"></script>
+
+  <!-- JavaScript - Core Functionality -->  <script src="../backend/backend.js"></script>
+  <script src="../backend/logout.js"></script>
+
+
+  <script type="module" src="backend/rp-progress.js"></script>
+  <script type="module" src="../backend/firebase-config.js"></script>
+  <script type="module" src="backend/adminFirewall.js"></script>
+</body>
+
+</html>
