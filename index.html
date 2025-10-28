@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LABGUARD - Gordon College</title>
+  <link rel="stylesheet" href="CSS/login.css"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+      <div class="circle circle-4"></div>
+
+      <div class="logo-container">
+        <img src="asset/image/CCS-CCSLOGO.png" alt="Gordon College Logo" class="logo">
+      </div>
+
+      <div class="college-name">
+        <h1>GORDON COLLEGE</h1>
+        <p>Management Information Unit - MIS Unit</p>
+      </div>
+
+      <div class="app-name">
+        <h2>LABGUARD</h2>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="login-form">
+        <h2>Welcome Back</h2>
+        <p>Please sign in to continue</p>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-with-icon">
+              <i class='bx bx-envelope'></i>
+              <input type="email" id="email" name="email" placeholder=" example@gmail.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-with-icon">
+              <i class='bx bx-lock-alt'></i>
+              <input type="password" id="password" name="password" placeholder=" ••••" required>
+              <i class='bx bx-hide toggle-password' id="togglePassword"></i>
+            </div>
+          </div>
+
+          <div id="error-message" class="error-message" style="display:none;">
+            <i class='bx bx-error-circle'></i>
+            <span>Invalid email or password. Please try again.</span>
+          </div>
+
+          <button type="submit" class="sign-in-btn">SIGN IN</button>
+        </form>
+
+        <div class="input">
+          <button id="google-login-btn" class="google-button">
+            <i class="fab fa-google"></i> Login with Google
+          </button>
+        </div>
+
+        <div class="account-help">
+          <p><a href="signUp.html">Need an account?</a> Please contact the lab administrator.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase auth login -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvPjYdsbnuNtup1b1gnDDBlhMUJQt47qw",
+      authDomain: "testingproject-b4bd5.firebaseapp.com",
+      projectId: "testingproject-b4bd5",
+      storageBucket: "testingproject-b4bd5.firebasestorage.app",
+      messagingSenderId: "588414689097",
+      appId: "1:588414689097:web:9bd56f9de5bbe0757dc498",
+      measurementId: "G-YNNB1TT15X"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const loginForm = document.getElementById("loginForm");
+    const errorMessage = document.getElementById("error-message");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const idTokenResult = await userCredential.user.getIdTokenResult();
+        if (idTokenResult.claims.admin) {
+          window.location.href = "ADMIN/structure-admin-iverson.html";
+        } else {
+          window.location.href = "structure.html";
+        }
+      } catch (error) {
+        console.error("Login failed:", error);
+        
+        // More specific error messages
+        let errorText = "Invalid email or password. Please try again.";
+        if (error.code === "auth/user-not-found") {
+          errorText = "No account found with this email. Please sign up first.";
+        } else if (error.code === "auth/wrong-password") {
+          errorText = "Incorrect password. Please try again.";
+        } else if (error.code === "auth/invalid-credential") {
+          errorText = "Invalid credentials. Please check your email and password.";
+        } else if (error.code === "auth/too-many-requests") {
+          errorText = "Too many failed attempts. Please try again later.";
+        }
+        
+        errorMessage.querySelector("span").textContent = errorText;
+        errorMessage.style.display = "flex";
+      }
+    });
+  </script>
+
+  <!-- Google login handler -->
+  <script type="module" src="backend/main.js"></script>
+
+  <!-- Password show/hide toggle -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const togglePassword = document.getElementById("togglePassword");
+      const password = document.getElementById("password");
+
+      togglePassword.addEventListener("click", function () {
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        this.classList.toggle("bx-hide");
+        this.classList.toggle("bx-show");
+      });
+    });
+  </script>
+  
+</body>
+</html>
