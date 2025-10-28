@@ -1,0 +1,55 @@
+/* PC Grid Container - for scrollable PC grid */
+.pc-grid-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling for rows that don't fit */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ff8000 #f1f1f1; /* Firefox */
+    max-width: 100%;
+    padding: 10px 5px;
+    max-height: 500px; /* Increased height for better spacing */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align to top */
+}
+
+/* Custom scrollbar styling for container */
+.pc-grid-container::-webkit-scrollbar {
+    height: 6px; /* Horizontal scrollbar height */
+    width: 6px; /* Vertical scrollbar width */
+}
+
+.pc-grid-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.pc-grid-container::-webkit-scrollbar-thumb {
+    background: #ff8000;
+    border-radius: 10px;
+}
+
+.pc-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #e67300;
+}
+
+/* Mobile styles - hide scrollbar for cleaner look */
+@media screen and (max-width: 576px) {
+    .pc-grid-container {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        max-height: 370px; /* Slightly shorter for mobile */
+    }
+    
+    .pc-grid-container::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 400px) {
+    .pc-grid-container {
+        padding: 3px;
+        max-height: 350px;
+    }
+}

@@ -1,0 +1,771 @@
+
+/* Import Google Fonts - Roboto and Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Font Variables */
+
+:root {
+    --font-primary: 'Roboto', sans-serif;
+    --font-secondary: 'Lato', sans-serif;
+
+    --color-white: #F9F9F9;
+    --color-primary: #3C91E6;
+    --color-primary-light: #CFE8FF;
+    --color-gray-light: #eee;
+    --color-gray: #AAAAAA;
+    --color-dark: #342E37;
+    --color-danger: #DB504A;
+    --color-warning: #FFCE26;
+    --color-warning-light: #FFF2C6;
+    --color-accent: #FD7238;
+    --color-accent-light: #FFE0D3;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --border-radius-round: 50%;
+    
+    --transition-speed: 0.3s;
+}
+
+/* Global font settings */
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-compact);
+    margin-top: 0;
+}
+
+
+
+
+
+
+/* =============================================
+   MAIN CONTENT STYLES
+   ============================================= */
+
+/* Global layout structure */
+html, body {
+    height: 100%;           /* Full height */
+    overflow: hidden;       /* Prevent scrolling on the page body */
+}
+
+/* Main content container */
+.body {
+    padding: 24px;
+    background-color: var(--color-gray-light);
+    height: calc(100vh - 60px); /* Viewport height minus navbar */
+    overflow: hidden;          /* Prevents scrolling at container level */
+}
+
+/* Status indicators container */
+.status-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 6px;
+}
+
+/* Status label styling */
+.status-label {
+    font-weight: var(--font-weight-bold);
+    margin-right: 10px;
+    margin-bottom: 0;
+    color: #555;
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* Status badge/tag shared styles */
+.status-value {
+    font-weight: var(--font-weight-bold);
+    padding: 5px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.7px;
+    font-size: var(--font-size-sm);
+    font-family: var(--font-primary);
+    text-transform: uppercase;
+}
+
+/* "In Repair" status - Red */
+.status-repair {
+    background-color: rgba(244, 67, 54, 0.15); /* Light red background */
+    color: #F44336;                           /* Red text */
+    border: 1px solid rgba(244, 67, 54, 0.3); /* Red border */
+}
+
+/* "Repaired" status - Green */
+.status-repaired {
+    background-color: rgba(76, 175, 80, 0.15); /* Light green background */
+    color: #4CAF50;                           /* Green text */
+    border: 1px solid rgba(76, 175, 80, 0.3); /* Green border */
+}
+
+/* Page title styling */
+.page-title {
+    color: var(--color-dark);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 20px;
+    padding-left: 8px;
+    border-left: 4px solid var(--color-primary); /* Orange accent bar */
+    font-family: var(--font-secondary);
+    letter-spacing: 0.5px;
+}
+
+/* Main content wrapper */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Summary cards container */
+.summary-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Individual summary card */
+.summary-card {
+    background-color: #ff8000; /* Orange brand color */
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Summary card title */
+.summary-card h3 {
+    font-size: var(--font-size-sm);
+    margin: 0;
+    font-weight: var(--font-weight-regular);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Summary card numeric value */
+.summary-card .count {
+    display: block;
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-weight-bold);
+    margin-top: 10px;
+    font-family: var(--font-primary);
+    letter-spacing: 0.5px;
+}
+
+/* =============================================
+   LAYOUT & PANELS
+   ============================================= */
+
+/* Two-column layout for main content */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 300px; /* Main content + sidebar */
+    gap: 20px;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr; /* Stack components on smaller screens */
+        gap: 15px; /* Reduced gap for better mobile spacing */
+    }
+    
+    /* Adjust rooms panel for mobile view */
+    .rooms-panel {
+        margin-top: 0;
+    }
+}
+
+/* PC Details main panel */
+.pc-details-panel {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-height: calc(100vh - 220px); /* Adjusted for better overall scrolling */
+}
+
+/* Panel header with title */
+.panel-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ececec;
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: #333;
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.3px;
+}
+
+/* Panel content area with scrolling */
+.panel-content {
+    padding: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 260px); /* Account for header and padding */
+}
+
+/* Section titles */
+.section-title {
+    color: #ff8000;
+    font-size: var(--font-size-md);
+    text-align: center;
+    font-weight: var(--font-weight-bold);
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+    font-family: var(--font-secondary);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+/* =============================================
+   COMPONENT CARDS GRID
+   ============================================= */
+
+/* Scrollable grid for component cards */
+.components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    max-height: 400px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px;
+    margin-right: -10px; /* Compensate for scrollbar width */
+}
+
+/* Mobile styling for components grid at 500px viewport */
+@media (max-width: 500px) {
+    .components-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller components */
+        gap: 10px;
+        padding-right: 5px;
+        margin-right: -5px;
+        max-height: 350px; /* Reduce height on mobile */
+    }
+}
+
+/* Custom scrollbar styling for components grid */
+.components-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.components-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+.components-grid::-webkit-scrollbar-thumb {
+    background: #ff8000; /* Orange scrollbar */
+    border-radius: 8px;
+}
+
+.components-grid::-webkit-scrollbar-thumb:hover {
+    background: #e67300; /* Darker orange on hover */
+}
+
+/* Individual component card */
+.component {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ececec;
+}
+
+/* Component card header */
+.component-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #fff2e6; /* Light orange background */
+    color: #ff8000;
+    border-bottom: 1px solid #ffe0cc;
+}
+
+/* Mobile styling for component cards */
+@media (max-width: 500px) {
+    .component {
+        border-radius: 6px;
+    }
+    
+    .component-header {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+}
+
+.component-header i {
+    font-size: 20px; /* Icon size */
+}
+
+.component-header span {
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.3px;
+}
+
+/* Component details area */
+.component-details {
+    padding: 15px;
+}
+
+/* Mobile styling for component details */
+@media (max-width: 500px) {
+    .component-header i {
+        font-size: 16px; /* Smaller icon on mobile */
+    }
+    
+    .component-header span {
+        font-size: 12px; /* Smaller text on mobile */
+        letter-spacing: 0.2px;
+    }
+    
+    .component-details {
+        padding: 10px;
+        font-size: 12px; /* Smaller detail text on mobile */
+    }
+}
+
+/* =============================================
+   COMPONENT & STATUS STYLES
+   ============================================= */
+
+/* Status tag for component cards */
+.status-tag {
+    display: inline-block;
+    background-color: #ffccaa; /* Light orange background */
+    color: #ff8000;           /* Orange text */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 10px 0;
+    font-family: var(--font-primary);
+    letter-spacing: 0.5px;
+}
+
+/* Mobile styling for status tags */
+@media (max-width: 500px) {
+    .status-tag {
+        padding: 2px 6px;
+        font-size: 11px;
+        margin: 0 0 6px 0;
+        letter-spacing: 0.2px;
+    }
+}
+
+/* Component name/description */
+.component-description {
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 10px 0;
+    color: #555;
+}
+
+/* Mobile styling for component description */
+@media (max-width: 500px) {
+    .component-description {
+        margin: 0 0 6px 0;
+        font-size: 11px;   
+        
+    font-size: var(--font-size-sm);
+    font-family: var(--font-secondary);
+    line-height: var(--line-height-normal);
+}
+    }
+    
+ 
+
+/* Component details text */
+.component-status {
+    color: #777;
+    font-size: var(--font-size-xs);
+    margin: 0;
+    line-height: var(--line-height-relaxed);
+    font-family: var(--font-primary);
+}
+
+/* Add Component card - dashed border with plus icon */
+.add-component {
+    border: 2px dashed #ff8000; /* Dashed orange border */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* Indicates clickable */
+    background-color: rgba(255, 128, 0, 0.05); /* Very light orange */
+    transition: all 0.2s ease;
+    min-height: 125px;
+}
+
+/* Hover effect for add component card */
+.add-component:hover {
+    background-color: rgba(255, 128, 0, 0.1); /* Slightly darker on hover */
+}
+
+/* Content inside add component card */
+.add-component-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ff8000;
+    padding: 20px;
+}
+
+/* Plus icon */
+.add-component-content i {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* "Add Component" text */
+.add-component-content span {
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-secondary);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.5px;
+}
+
+/* =============================================
+   REPAIR HISTORY SECTION
+   ============================================= */
+
+/* Repair history section container */
+.repair-history {
+    margin-top: 30px; /* Space from components section */
+}
+
+/* History cards grid - makes it scrollable */
+.history-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 15px;
+    max-height: 220px; /* Fixed height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px;
+    margin-right: -10px; /* Compensate for scrollbar width */
+}
+
+/* Custom scrollbar styling for history cards */
+.history-cards::-webkit-scrollbar {
+    width: 6px; /* Thinner than components scrollbar */
+}
+
+.history-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+.history-cards::-webkit-scrollbar-thumb {
+    background: #ff8000; /* Orange scrollbar */
+    border-radius: 6px;
+}
+
+.history-cards::-webkit-scrollbar-thumb:hover {
+    background: #e67300; /* Darker orange on hover */
+}
+
+/* Individual history card */
+.history-card {
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ececec;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effects */
+}
+
+/* Hover effect for history cards */
+.history-card:hover {
+    transform: translateY(-3px); /* Slight upward movement */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+}
+
+/* Date display in history card */
+.history-card .date {
+    font-size: 12px;
+    color: #777;
+    font-weight: 500;
+}
+
+/* Status tag for history items */
+.status-tag {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* "Repaired" status - Green */
+.status-Repaired {
+    background-color: rgba(76, 175, 80, 0.15); /* Light green background */
+    color: #4CAF50;                           /* Green text */
+    border: 1px solid rgba(76, 175, 80, 0.3); /* Green border */
+}
+
+/* Support for history items with consistent colors */
+
+/* =============================================
+   ROOMS PANEL STYLES
+   ============================================= */
+
+/* Rooms panel container */
+.rooms-panel {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Rooms panel title */
+.rooms-panel h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ff8000; /* Orange title */
+    font-size: var(--font-size-lg);
+    font-family: var(--font-secondary);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+/* Grid layout for room buttons */
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 buttons per row */
+    gap: 10px;
+}
+
+/* Room button styling */
+.room-btn {
+    background-color: white;
+    border: 2px solid #ececec;
+    border-radius: 8px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
+    color: #555;
+    cursor: pointer; /* Indicates clickable */
+    transition: all 0.2s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for room buttons */
+.room-btn:hover {
+    border-color: #ff8000; /* Orange border on hover */
+    color: #ff8000;       /* Orange text on hover */
+}
+
+/* Add room button (with plus icon) */
+.add-room {
+    color: #ff8000; /* Orange text */
+    border-color: #ececec;
+}
+
+.add-room i {
+    font-size: 20px; /* Plus icon size */
+}
+
+
+/* =============================================
+   GRID LAYOUT SYSTEM
+   ============================================= */
+
+/* Main grid container layout */
+.container {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "cards cards cards"
+        "content content rooms"
+        "content content rooms";
+}
+
+/* Grid area assignments */
+.cards { grid-area: cards; }
+.content { grid-area: content; }
+.rooms { grid-area: rooms; }
+
+/* =============================================
+   REPAIR HISTORY ITEMS
+   ============================================= */
+
+/* Repair history content container */
+.repair-history-content {
+    margin-top: 15px;
+}
+
+/* Grid of history item cards - makes it scrollable */
+.history-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 15px;
+    max-height: 220px; /* Fixed height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px;
+    margin-right: -10px; /* Compensate for scrollbar width */
+}
+
+/* Custom scrollbar for history items */
+.history-items::-webkit-scrollbar {
+    width: 6px; /* Slim scrollbar */
+}
+
+.history-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 6px;
+}
+
+.history-items::-webkit-scrollbar-thumb {
+    background: #ff8000; /* Orange scrollbar */
+    border-radius: 6px;
+}
+
+.history-items::-webkit-scrollbar-thumb:hover {
+    background: #e67300; /* Darker orange on hover */
+}
+
+/* Individual history item card */
+.history-item {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #ececec;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Left border indicator that appears on hover */
+.history-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #ff8000; /* Orange indicator */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effects for history item */
+.history-item:hover {
+    background-color: #fff2e6; /* Light orange background */
+    border-color: #ffe0cc;
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
+
+/* Show the left border indicator on hover */
+.history-item:hover::before {
+    opacity: 1;
+}
+
+/* Date pill/badge */
+.history-item .date {
+    font-size: var(--font-size-xs);
+    color: #777;
+    font-weight: var(--font-weight-medium);
+    background-color: #f5f5f5; /* Light gray background */
+    padding: 3px 8px;
+    border-radius: 12px; /* Pill shape */
+    margin-top: 5px;
+    font-family: var(--font-primary);
+    letter-spacing: 0.3px;
+}
+
+/* Status badge in history item */
+.history-item .status-tag {
+    min-width: 100px; /* Ensure consistent width */
+    text-align: center;
+    text-transform: uppercase; /* All caps */
+    letter-spacing: 1px; /* Wider letter spacing for tags */
+    font-size: var(--font-size-xs);
+    padding: 6px 12px;
+    border-radius: 20px; /* Rounded pill */
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Status-specific styling */
+.status-Repaired {
+    background-color: rgba(76, 175, 80, 0.15); /* Light green background */
+    color: #4CAF50;                           /* Green text */
+    border-color: rgba(76, 175, 80, 0.3);     /* Green border */
+}
+
+/* =============================================
+   OVERRIDE DARK MODE STYLES
+   ============================================= */
+
+/* Hide theme switch completely */
+.theme-switch, 
+#theme-switch {
+    display: none !important;
+}
+
+/* Override dark mode by ensuring light mode styles always apply */
+body {
+    background-color: var(--color-gray-light) !important;
+    color: var(--color-dark) !important;
+}
+
+/* Force light mode colors for all elements that might be affected by dark mode */
+.sidebar,
+.navbar,
+.pc-details-panel,
+.rooms-panel,
+.history-item,
+.component,
+.detail-row,
+.details-modal-content {
+    background-color: var(--color-white) !important;
+}
+
+/* Additional color overrides for specific elements */
+.page-title,
+.panel-header h2,
+.component-description,
+.detail-label {
+    color: var(--color-dark) !important;
+}

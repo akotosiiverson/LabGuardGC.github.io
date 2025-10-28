@@ -1,0 +1,833 @@
+/* Main styling for PC Specifications page with Orange theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+}
+
+/* Header styling */
+.header-title {
+    color: #ff7700;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    border-bottom: 2px solid #ff7700;
+    padding-bottom: 10px;
+    animation: fadeSlideDown 0.8s ease-out forwards;
+}
+
+@keyframes fadeSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Status section styling */
+.status-label {
+    font-weight: bold;
+    margin-right: 10px;
+    animation: fadeSlideDown 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+#current-status {
+    color: #ff5500;
+    font-weight: bold;
+    background-color: rgba(255, 119, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ff7700;
+    animation: fadeSlideDown 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+/* Specifications grid styling */
+#specifications {
+    margin-top: 25px;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+
+/* Style for scrollbar */
+.specs-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.specs-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.specs-grid::-webkit-scrollbar-thumb {
+    background: #ff7700;
+    border-radius: 10px;
+}
+
+.specs-grid::-webkit-scrollbar-thumb:hover {
+    background: #ff5500;
+}
+
+/* Specification card styling */
+.spec-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid #ff7700;
+    position: relative;
+    animation: fadeInScale 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInScale {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes moveDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Apply staggered delay to components */
+#keyboard-spec {
+    animation-delay: 0.1s;
+}
+
+#mouse-spec {
+    animation-delay: 0.2s;
+}
+
+#headphones-spec {
+    animation-delay: 0.3s;
+}
+
+#os-spec {
+    animation-delay: 0.4s;
+}
+
+#cpu-cooler-spec {
+    animation-delay: 0.5s;
+}
+
+#power-strip-spec {
+    animation-delay: 0.6s;
+}
+
+#ethernet-cable-spec {
+    animation-delay: 0.7s;
+}
+
+#case-spec {
+    animation-delay: 0.8s;
+}
+
+#psu-spec {
+    animation-delay: 0.9s;
+}
+
+#processor-spec {
+    animation-delay: 1.0s;
+}
+
+#motherboard-spec {
+    animation-delay: 1.1s;
+}
+
+#ram-spec {
+    animation-delay: 1.2s;
+}
+
+#storage-spec {
+    animation-delay: 1.3s;
+}
+
+#graphics-spec {
+    animation-delay: 1.4s;
+}
+
+#network-spec {
+    animation-delay: 1.5s;
+}
+
+#monitor-spec {
+    animation-delay: 1.6s;
+}
+
+#add-component {
+    animation: fadeInScale 0.8s ease-out 1.7s forwards;
+    opacity: 0;
+}
+
+.spec-card:hover {
+    transform: translateY(5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.spec-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.component-title {
+    color: #ff7700;
+    margin-right: 10px;
+    font-size: 18px;
+    animation: fadeIn 0.4s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+.spec-component {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    width: 100%;
+    display: block;
+    padding-left: 5px;
+    border-left: 2px solid rgba(255, 119, 0, 0.3);
+    animation: fadeIn 0.4s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+.spec-description p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+    animation: fadeIn 0.4s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Icon styling */
+.bx {
+    color: #ff7700;
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.bx:hover {
+    color: #ff5500;
+}
+
+.component-icon {
+    font-size: 22px;
+    background-color: rgba(255, 119, 0, 0.1);
+    padding: 8px;
+    border-radius: 50%;
+    color: #ff7700;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+    animation: rotateIn 0.5s ease-out forwards;
+    opacity: 0;
+    animation-delay: inherit;
+}
+
+@keyframes rotateIn {
+    0% {
+        transform: rotate(-30deg) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.spec-card:hover .component-icon {
+    background-color: #ff7700;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Add component button styling */
+#add-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    border: 2px dashed #ff7700;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#add-component:hover {
+    border-color: #ff5500;
+}
+
+#add-btn {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: #ff7700;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(255, 119, 0, 0.3);
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+    position: relative;
+}
+
+#add-btn i {
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-btn:hover {
+    background-color: #ff5500;
+    box-shadow: 0 4px 12px rgba(255, 85, 0, 0.4);
+}
+
+#add-btn:hover i {
+    transform: scale(1.1);
+}
+
+.plus-icon {
+    font-style: normal;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 48px; /* Increased from default size */
+    font-weight: bold;
+}
+
+/* Repair history section styling */
+#repair-header {
+    color: #ff7700;
+    margin: 20px 0 15px 0;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#repair-history {
+    margin-top: 10px;
+}
+
+.repair-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.repair-item {
+    flex: 1;
+    min-width: 200px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 3px solid #ff7700;
+    animation: moveDown 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.repair-item:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.repair-item:nth-child(2) {
+    animation-delay: 0.9s;
+}
+
+.repair-item:nth-child(3) {
+    animation-delay: 1.1s;
+}
+
+.repair-item.clickable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.repair-item.clickable:hover {
+    transform: translateY(5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background-color: #fff8f0;
+}
+
+.repair-item.clickable::after {
+    content: 'View details';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #ff7700;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.repair-item.clickable:hover::after {
+    opacity: 1;
+}
+
+.current-status {
+    font-weight: bold;
+    color: #ff7700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-icon {
+    margin-right: 5px;
+    color: #4caf50;
+    transition: color 0.3s ease;
+}
+
+.repair-item:hover .status-icon {
+    color: #3d9140;
+}
+
+.repair-date {
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-icon {
+    margin-right: 5px;
+    color: #ff7700;
+    transition: color 0.3s ease;
+}
+
+.repair-item:hover .date-icon {
+    color: #ff5500;
+}
+
+.add-repair {
+    color: #ff7700;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-icon {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.add-repair:hover {
+    color: #ff5500;
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media screen and (max-width: 900px) {
+    .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .repair-item {
+        min-width: 100%;
+    }
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 600px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    color: #888;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ff5500;
+}
+
+.modal h2 {
+    color: #ff7700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.modal h2 i {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #ff7700;
+    transition: color 0.3s ease;
+}
+
+.modal h2:hover i {
+    color: #ff5500;
+}
+
+.modal-body {
+    padding: 10px 0;
+}
+
+.info-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info-label {
+    font-weight: bold;
+    min-width: 140px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.info-label i {
+    margin-right: 8px;
+    color: #ff7700;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.info-row:hover .info-label i {
+    color: #ff5500;
+}
+
+.info-value {
+    flex: 1;
+    color: #333;
+}
+
+.info-notes {
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #fff8f0;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+}
+
+/* Add Component Form Styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label i {
+    color: #ff7700;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #ff7700;
+    box-shadow: 0 0 5px rgba(255, 119, 0, 0.3);
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.submit-btn {
+    background-color: #ff7700;
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #ff5500;
+}
+
+.cancel-btn {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.cancel-btn:hover {
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+.submit-btn i,
+.cancel-btn i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Success message styling */
+.success-message {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    font-weight: bold;
+    animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.success-message.fade-out {
+    animation: slideOut 0.5s ease forwards;
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Edit and Delete buttons for components */
+.edit-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ff7700;
+    color: #ff7700;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 45px;
+    background-color: #fff;
+    border: 1px solid #f44336;
+    color: #f44336;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.spec-card:hover .edit-btn,
+.spec-card:hover .delete-btn {
+    opacity: 1;
+}
+
+.edit-btn:hover {
+    background-color: #ff7700;
+    color: white;
+    transform: scale(1.1);
+}
+
+.delete-btn:hover {
+    background-color: #f44336;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Animation for delete operation */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    20% {
+        transform: translateY(5px) scale(1.02);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+    }
+}

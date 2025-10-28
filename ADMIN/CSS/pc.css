@@ -1,0 +1,323 @@
+
+/* 
+ * PC Grid Layout Styles for LabGuard System
+ *
+ * This CSS defines the styling for the PC grid layout in the repair progress
+ * tracking page, including hover effects for edit and delete controls.
+ * The grid displays PCs as circular elements with PC labels and hover controls.
+ */
+
+/* =============================================
+   PC GRID LAYOUT STYLES
+   ============================================= */
+
+/* Section title styling */
+.section-title {
+    color: #ff8000;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+/* Panel content styling */
+.panel-content {
+    padding: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 260px); /* Account for header and padding */
+}
+
+@media screen and (max-width: 576px) {
+    .panel-content {
+        padding: 10px;
+        max-height: calc(100vh - 200px);
+    }
+}
+
+/* PC Grid Container - Displays PCs in a fixed 5x5 grid layout that fills the container */
+.pc-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns with equal width (fraction of container) */
+    grid-template-rows: repeat(5, 1fr); /* 5 rows with equal height */
+    gap: 15px; /* Equal gap for better spacing */
+    margin-bottom: 20px;
+    padding: 15px;
+    min-width: 480px; /* Minimum width */
+    width: 100%; /* Take full width of container */
+    height: 450px; /* Fixed height to ensure grid is consistent */
+    justify-content: space-evenly; /* Distribute space evenly between and around items */
+    justify-items: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ff8000 #f1f1f1; /* Firefox */
+    max-width: 100%;
+    white-space: nowrap; /* Prevent wrapping to next line */
+}
+
+/* Webkit scrollbar styling for PC grid */
+.pc-grid::-webkit-scrollbar {
+    height: 6px; /* Horizontal scrollbar height */
+}
+
+.pc-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.pc-grid::-webkit-scrollbar-thumb {
+    background: #ff8000;
+    border-radius: 10px;
+}
+
+.pc-grid::-webkit-scrollbar-thumb:hover {
+    background: #e67300;
+}
+
+/* Individual PC item container */
+.pc-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* For positioning hover controls */
+    margin: 5px;
+    width: 100%; /* Take full width of grid cell */
+    height: 100%; /* Take full height of grid cell */
+}
+
+/* PC circular representation */
+.pc-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    border: 3px solid #ff8000; /* Orange border */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* PC Label (PC-1, PC-2, etc.) */
+.pc-label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #ff8000; /* Orange text color */
+}
+
+/* Hover controls container (Edit and Delete buttons) */
+.hover-controls {
+    position: absolute;
+    top: -35px; /* Position above the circle */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Show hover controls when PC is hovered */
+.pc-circle:hover .hover-controls {
+    opacity: 1;
+    visibility: visible;
+    top: -38px; /* Slight upward animation on hover */
+}
+
+/* PC Hover effects */
+.pc-circle:hover {
+    transform: translateY(2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-color: #e67300; /* Darker orange on hover */
+}
+
+/* Edit button styling */
+.edit-btn {
+    background-color: #4285F4; /* Google blue */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit button hover effect */
+.edit-btn:hover {
+    background-color: #3367D6; /* Darker blue */
+    transform: scale(1.05);
+}
+
+/* Delete button styling */
+.delete-btn {
+    background-color: #EA4335; /* Google red */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete button hover effect */
+.delete-btn:hover {
+    background-color: #D32F2F; /* Darker red */
+    transform: scale(1.05);
+}
+
+/* Different status styles for PC circles */
+.pc-circle.available {
+    border-color: #4CAF50; /* Green for available */
+}
+
+.pc-circle.in-repair {
+    border-color: #F44336; /* Red for repair */
+}
+
+.pc-circle.maintenance {
+    border-color: #FFC107; /* Yellow/amber for maintenance */
+}
+
+/* Additional PC styles can be added here if needed */
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 1400px) {
+    .pc-grid {
+        grid-template-columns: repeat(6, 1fr); /* 6 PCs per row */
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .pc-grid {
+        grid-template-columns: repeat(5, 1fr); /* 5 PCs per row */
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .pc-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 PCs per row */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pc-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 PCs per row */
+        gap: 10px;
+    }
+    
+    .pc-circle {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .pc-label {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 576px) {    
+    .pc-grid {
+        display: grid; /* Keep the grid display */
+        grid-template-columns: repeat(5, 70px); /* 5 columns for mobile, slightly smaller */
+        grid-template-rows: repeat(5, auto); /* 5 rows */        padding: 10px 5px;
+        gap: 12px 15px; /* Slightly smaller gaps than desktop but still spacious */
+        margin-bottom: 10px;
+        min-width: 400px; /* Adjusted for new gap sizes */
+        justify-content: space-between;
+        justify-items: center;
+        align-items: center;
+    }
+      /* Make PC items slightly smaller on mobile */
+    .pc-circle {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 400px) {    .pc-grid {
+        grid-template-columns: repeat(5, 60px); /* Even smaller columns */
+        gap: 8px 10px; /* Smaller but still spacious gaps (row gap, column gap) */
+        min-width: 340px; /* Adjusted for new gap sizes */
+        justify-content: space-between;
+        justify-items: center;
+        align-items: center;
+    }
+    
+    .pc-circle {
+        width: 55px;
+        height: 55px;
+        border-width: 2px; /* Thinner border */
+    }
+    
+    .pc-label {
+        font-size: 12px; /* Smaller text */
+    }
+    
+    /* Hide scrollbar while preserving functionality */
+    .pc-grid::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Make PC items smaller on mobile */
+    .pc-circle {
+        width: 55px;
+        height: 55px;
+        border-width: 2px;
+    }
+      /* Adjust PC items for horizontal scrolling */
+    .pc-item {
+        flex: 0 0 auto; /* Don't grow or shrink, maintain auto width */
+        min-width: 70px; /* Minimum width for each PC item */
+        margin-right: 5px; /* Right spacing between PC items */
+    }
+    
+    /* Add scroll indicator for better UX */
+    .pc-grid::after {
+        content: '';
+        flex: 0 0 10px; /* Non-shrinking element */
+        min-width: 10px; /* Minimum width */
+        height: 1px; /* Invisible but takes space */
+    }
+      .pc-label {
+        font-size: 12px;
+    }
+}
+
+/* Extra small mobile screens */
+@media screen and (max-width: 375px) {
+    .pc-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 PCs per row for very small devices */
+        gap: 5px;
+    }
+    
+    .pc-circle {
+        width: 50px;
+        height: 50px;
+        border-width: 2px;
+    }
+    
+    .pc-label {
+        font-size: 11px;
+    }
+    }

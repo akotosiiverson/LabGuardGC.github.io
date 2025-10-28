@@ -1,0 +1,247 @@
+/* 
+ * View Details Styling for History Items
+ * This CSS provides styling for the "View Details" links in repair history items
+ */
+
+
+
+
+/* =============================================
+   dark mode styles
+   ============================================= */
+  
+
+body.dark .details-modal-content {
+    background-color: #1E1E1E;
+    color: #f0f0f0;
+}
+
+body.dark .detail-label,
+body.dark .detail-value {
+    color: #f0f0f0;
+    
+}
+body.dark .report-image{
+    border: 2px solid #AAAAAA;
+}
+
+/*added new(jiro)*/
+.report-image {
+  max-width: 100%;
+  width: 150px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 20px;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+/* Adjust image size on smaller screens */
+@media (max-width: 480px) {
+  .report-image {
+    width: 180px;
+  }
+}
+
+
+
+/* =============================================
+   VIEW DETAILS LINK STYLES
+   ============================================= */
+.view-details {
+    display: inline-block;
+    cursor: pointer;
+    color: #FF6A1A;
+    font-size: 12px;
+    margin-left: 10px;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.view-details i {
+    font-size: 14px;
+    margin-right: 2px;
+    vertical-align: text-top;
+}
+
+.view-details:hover {
+    color: #FF6A1A;
+    text-decoration: underline;
+}
+
+/* =============================================
+   MODAL DIALOG STYLES
+   ============================================= */
+.details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.details-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.details-modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.details-modal.active .details-modal-content {
+    transform: translateY(0);
+}
+
+.details-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.details-modal-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FF6A1A;
+    margin: 0;
+}
+
+.details-modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.details-modal-close:hover {
+    color: #FF6A1A;
+}
+
+/* =============================================
+   DETAIL ROW STYLES
+   ============================================= */
+.detail-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.detail-value {
+    color: #555;
+    line-height: 1.5;
+}
+
+/* =============================================
+   ADDITIONAL STYLING FOR RESPONSIVENESS
+   ============================================= */
+
+/* =============================================
+   RESPONSIVE STYLES
+   ============================================= */
+@media (min-width: 768px) {
+    .detail-row {
+        flex-direction: row;
+    }
+    
+    .detail-label {
+        min-width: 150px;
+        margin-bottom: 0;
+    }
+}
+
+.details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.details-left {
+  flex: 2;
+}
+
+.details-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* Detail text styling */
+.detail-row {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.detail-value {
+  color: #555;
+}
+
+/* Desktop: layout side-by-side */
+@media (min-width: 768px) {
+  .details-wrapper {
+    flex-direction: row;
+  }
+
+  .detail-row {
+    flex-direction: row;
+  }
+
+  .detail-label {
+    min-width: 150px;
+    margin-bottom: 0;
+  }
+}
+
+/* Mobile: image at top, centered */
+@media (max-width: 767px) {
+  .details-wrapper {
+    flex-direction: column-reverse;
+  }
+  
+  .details-right {
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  
+  .report-image {
+    margin: 0 auto;
+  }
+}

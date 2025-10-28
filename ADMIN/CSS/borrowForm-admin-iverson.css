@@ -1,0 +1,177 @@
+:root {
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Lato', sans-serif;
+
+  --color-white: #F9F9F9;
+  --color-primary: #3C91E6;
+  --color-primary-light: #CFE8FF;
+  --color-gray-light: #eee;
+  --color-gray: #AAAAAA;
+  --color-dark: #342E37;
+  --color-danger: #DB504A;
+  --color-warning: #FFCE26;
+  --color-warning-light: #FFF2C6;
+  --color-accent: #FD7238;
+  --color-accent-light: #FFE0D3;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+  
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-round: 50%;
+  
+  --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+.return-btn-js {
+  display: inline-block;
+  visibility: visible;
+  opacity: 1;
+}
+  
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfect center */
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    background: #fff;
+  }
+  
+  .form-left {
+    flex: 1 1 50%;
+    padding: 20px;
+  }
+  
+  .logo {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+  
+  h1 {
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+  
+  .unit {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input,
+  select,
+  textarea {
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  textarea {
+    resize: none;
+    height: 80px;
+  }
+  
+  .submit-button-request {
+    background: var(--color-accent);
+    color: var(--color-white);
+    font-weight: bold;
+    border: none;
+    padding: 14px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .submit-button-request:hover {
+    background: var(--color-danger);
+  }
+  
+  .form-right {
+    flex: 1 1 50%;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .form-right h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .tv-icon {
+    width: 130px;
+    margin-bottom: 10px;
+  }
+  
+  .tv-label {
+    color: orange;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .notice {
+    margin-top: 20px;
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+  }
+  .gc-logo{
+    display:flex;
+    align-items: center;
+
+  }
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .form-left,
+    .form-right {
+      flex: 1 1 100%;
+    }
+  
+    .form-right {
+      text-align: center;
+    }
+  }
+  
+  /* close button css*/
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .close-button img {
+    width: 24px;
+    height: 24px;
+  }
+ 

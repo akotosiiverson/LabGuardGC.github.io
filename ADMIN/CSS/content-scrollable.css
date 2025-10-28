@@ -1,0 +1,101 @@
+/* 
+ * Scrollable Content CSS for LabGuard System
+ *
+ * This CSS defines the scrollable behavior for the content wrapper
+ * and its child elements, ensuring smooth scrolling on all device sizes.
+ */
+
+/* =============================================
+   SCROLLABLE CONTENT STYLES
+   ============================================= */
+
+/* Body container styling */
+.body {
+    height: calc(100vh - 56px); /* Account for navbar height */
+    overflow: hidden; /* Prevent double scrollbars */
+}
+
+/* Main content wrapper scrollable behavior */
+.content-wrapper {
+    height: 100%; /* Take full height of parent */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 15px;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ff8000 #f1f1f1; /* Firefox */
+    
+    /* For smooth scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Webkit scrollbar styling */
+.content-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb {
+    background: #ff8000;
+    border-radius: 10px;
+}
+
+.content-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #e67300;
+}
+
+/* Ensure main-content retains proper layout while scrollable */
+.main-content {
+    margin-bottom: 20px; /* Add some bottom spacing */
+}
+
+/* Mobile-specific adjustments */
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        height: calc(100vh - 120px); /* Account for mobile navbar */
+        padding: 10px;
+    }
+}
+
+/* Extra small screens */
+@media screen and (max-width: 576px) {
+    .content-wrapper {
+        height: calc(100vh - 140px); /* Adjusted for bottom nav */
+        padding: 8px 5px;
+    }
+    
+    /* Hide scrollbar on mobile for cleaner look */
+    .content-wrapper {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .content-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+    
+    /* Adjust main content for better stacking on mobile */
+    .main-content {
+        gap: 10px;
+    }
+    
+    /* Adjust panels for mobile view */
+    .pc-details-panel, .rooms-panel {
+        margin-bottom: 15px;
+    }
+    
+    /* Make rooms panel more compact on mobile */
+    .rooms-panel {
+        padding: 10px;
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 400px) {
+    .content-wrapper {
+        height: calc(100vh - 150px);
+        padding: 5px 3px;
+    }
+}
