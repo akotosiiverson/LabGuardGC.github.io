@@ -1,0 +1,312 @@
+/* =============================================
+   RESPONSIVE DESIGN STYLES
+   ============================================= */
+
+/* Base styles for mobile devices first */
+@media only screen and (max-width: 600px) {    /* Convert sidebar to bottom navigation */
+    .sidebar {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        background: var(--color-white);
+        z-index: 2000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }      /* Smaller summary cards for mobile - maintain inline layout */      .summary-cards {
+        display: flex;
+        flex-direction: row;
+        gap: 6px; /* Reduced gap for mobile */
+        padding: 0 6px;
+        margin-bottom: 15px;
+        overflow-x: visible; /* Make sure all content is visible */
+        justify-content: space-between;
+        -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+      .summary-card {
+        padding: 10px 5px;
+        width: 32%; /* Fixed width instead of min-width */
+        max-width: 32%;
+        flex: 1 1 0;
+        margin-bottom: 0;
+    }
+      .summary-card h3 {
+        font-size: 10px;
+        margin: 0 0 2px 0;
+        white-space: normal; /* Allow text wrapping */
+        line-height: 1.1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 2px;
+    }
+      .summary-card .count {
+        font-size: 13px;
+        font-weight: bold;
+        display: block;
+        padding: 0;
+        margin: 0;
+        line-height: 1.3;    }
+}
+
+/* Extra small screen adjustments */
+@media only screen and (max-width: 375px) {
+        .summary-cards {
+            gap: 3px;
+            padding: 0 3px;
+        }
+        
+        .summary-card {
+            padding: 5px 2px;
+            width: 32%; /* Fixed width for each card */
+            max-width: 32%;
+            flex: 1 0 0; /* Don't allow flex growth beyond width */
+            min-width: 0; /* Allow shrinking if needed */
+        }
+        
+        .summary-card h3 {
+            font-size: 7px; /* Smaller font size */
+            margin-bottom: 1px;
+            white-space: normal; /* Allow text to wrap if needed */
+            line-height: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            letter-spacing: -0.4px; /* Tighter letter spacing */
+        }
+        
+        /* Specific adjustment for "TOTAL AVAILABLE PC" card */
+        .summary-card:last-child h3 {
+            font-size: 6px; /* Even smaller for the longer title */
+            letter-spacing: -0.5px;
+            word-break: break-all; /* Break anywhere to prevent overflow */
+            padding: 0; /* Remove extra padding */
+        }
+        
+        .pc-totals-available {
+            font-size: 10px;
+        }
+        
+        .summary-card .count {
+            font-size: 11px;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+    }
+
+    /* Hide brand on mobile */
+    .sidebar__brand {
+        display: none;
+    }
+
+    /* Adjust menu positioning */
+    .sidebar__menu {
+        margin-top: 0;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .sidebar__menu--main {
+        margin-top: 0;
+        padding: 10px 0;
+    }    /* Bottom menu is now integrated with main menu */
+    .sidebar__menu--bottom {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: auto;
+        display: none; /* Hide the bottom logout menu on mobile */
+    }
+
+    /* Adjust menu items */
+    .sidebar__item {
+        height: auto;
+        margin-left: 0;
+        border-radius: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%; /* Distribute evenly */
+    }
+
+    /* Remove curve effects */
+    .sidebar__item--active::before,
+    .sidebar__item--active::after {
+        display: none;
+    }
+
+    /* Adjust links */
+    .sidebar__link {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+        padding: 8px 0;
+        text-align: center;
+    }
+
+    /* Position icons centrally */
+    .sidebar__link i {
+        min-width: auto;
+        margin-bottom: 4px;
+        font-size: 24px;
+    }
+
+    /* Adjust text size */
+    .sidebar__text {
+        font-size: 10px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    /* Adjust main content area */
+    .main {
+        width: 100%;
+        left: 0;
+        padding-bottom: 80px; /* Add space for the bottom navigation */
+    }
+
+    /* Always show sidebar on mobile */
+    .sidebar.hide {
+        width: 100%;
+    }    /* Adjust content area when sidebar is hidden */
+    .sidebar.hide ~ .main {
+        width: 100%;
+        left: 0;
+    }
+    
+    /* Ensure dashboard link is visible */
+    .navbar__link {
+        display: inline-block;
+    }
+
+    /* Specific styles for PC-related cards, especially for "TOTAL AVAILABLE PC" */
+    .summary-card:last-child h3 {
+        font-size: 12px;
+        letter-spacing: -0.3px; /* Tighter letter spacing */
+        line-height: 1.1;
+    }
+
+    /* Mobile logout button styling for small screens */
+    .mobile-logout {
+        display: block;
+        margin: 15px auto;
+    }
+    
+    .mobile-logout__link {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .mobile-logout__link i {
+        font-size: 16px;
+    }
+    
+    .mobile-logout__link span {
+        font-size: 13px;
+    }
+}
+
+/* Medium mobile styles (between 500px and 600px) */
+@media only screen and (min-width: 501px) and (max-width: 600px) {
+    .summary-cards {
+        gap: 10px;
+        padding: 0 10px;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .summary-card {
+        min-width: 125px;
+        max-width: 32%;
+        padding: 12px 8px;
+        flex: 1 1 0;
+    }
+    
+    .summary-card h3 {
+        font-size: 12px;
+        margin: 0 0 4px 0;
+    }
+    
+    .summary-card .count {
+        font-size: 15px;
+    }
+    
+    .summary-card:last-child h3 {
+        font-size: 11px;
+    }
+}
+
+/* Tablet styles */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    /* Slightly smaller sidebar for tablets */
+    .sidebar {
+        width: 220px;
+    }
+
+    .main {
+        width: calc(100% - 220px);
+        left: 220px;
+    }
+
+    .sidebar.hide ~ .main {
+        width: calc(100% - 60px);
+        left: 60px; 
+    }
+      /* Medium-sized summary cards for tablets - maintain row layout */
+    .summary-cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 15px;
+    }
+      .summary-card {
+        padding: 12px;
+        min-width: 100px;
+        max-width: 150px;
+        flex: 1 0 100px; /* Don't shrink below 100px */
+    }
+    
+    .summary-card h3 {
+        font-size: 13px;
+    }
+    
+    .summary-card .count {
+        font-size: 15px;
+    }
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 600px) {
+    /* Default styles already defined in design.css */
+    
+    /* Hide mobile logout on desktop */
+    .mobile-logout {
+        display: none;
+    }
+}
+
+/* Specific styles for PC-related cards, especially for "TOTAL AVAILABLE PC" */
+.summary-card:last-child h3 {
+    font-size: 12px;
+    letter-spacing: -0.3px; /* Tighter letter spacing */
+    line-height: 1.1;
+}
+
+@media only screen and (max-width: 600px) {
+    .summary-card:last-child h3 {
+        /* font-size: 14px; */
+        letter-spacing: -0.5px;
+    }
+    
+    /* Hide "Available" on small screens */
+    .hide-small {
+        display: none;
+    }
+}
+

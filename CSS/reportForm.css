@@ -1,0 +1,581 @@
+:root {
+    --font-primary: 'Roboto', sans-serif;
+    --font-secondary: 'Lato', sans-serif;
+  
+    --color-white: #F9F9F9;
+    --color-primary: #3C91E6;
+    --color-primary-light: #CFE8FF;
+    --color-gray-light: #eee;
+    --color-gray: #AAAAAA;
+    --color-dark: #342E37;
+    --color-danger: #DB504A;
+    --color-warning: #FFCE26;
+    --color-warning-light: #FFF2C6;
+    --color-accent: #FD7238;
+    --color-accent-light: #FFE0D3;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --error-color: #ff3b3b;
+    --error-bg: rgba(255, 59, 59, 0.1);
+    
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --border-radius-round: 50%;
+    
+    --transition-speed: 0.3s;
+  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+  
+    
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Perfect center */
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: auto;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 30px;
+      background: #fff;
+    }
+    
+    .form-left {
+      flex: 1 1 50%;
+      padding: 20px;
+    }
+      .logo {
+      width: 60px;
+      height: auto;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    
+    h1 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+    
+    .college-title {
+      color: var(--color-accent);
+      font-size: 22px;
+      margin: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    
+    .unit {
+      color: gray;
+      margin-bottom: 20px;
+      margin-top: 5px;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+      input,
+    select,
+    textarea {
+      margin-bottom: 15px;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    
+    .file-input-container {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .file-input-label {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      font-size: 14px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .file-input-label:hover {
+      background-color: #f8f8f8;
+    }
+    
+    .file-input-label i {
+      margin-right: 8px;
+      font-size: 18px;
+      color: var(--color-accent);
+    }
+    
+    input[type="file"] {
+      position: absolute;
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    /* Image preview styling */
+    .report-image-preview {
+      max-width: 100%;
+      max-height: 150px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      display: none;
+    }
+    
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+    
+    .submit-button-request {
+      background: var(--color-accent);
+      color: var(--color-white);
+      font-weight: bold;
+      border: none;
+      padding: 14px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .submit-button-request:hover {
+      background: var(--color-danger);
+    }
+    
+    .form-right {
+      flex: 1 1 50%;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .form-right h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+      .tv-icon {
+      width: 130px;
+      margin-bottom: 10px;
+      border-radius: 20px;
+      padding: 20px;
+      border: 2px solid black;
+    }
+    
+    .tv-label {
+      color: var(--color-accent);
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .notice {
+      margin-top: 20px;
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      font-size: 14px;
+    }    .gc-logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 5px;
+    }    /* Media queries for responsiveness */
+    @media screen and (max-width: 1200px) {
+      .container {
+        max-width: 90%;
+        width: 900px;
+      }
+      
+      .form-left, .form-right {
+        padding: 18px;
+      }
+      
+      .form-right h2 {
+        font-size: 19px;
+      }
+      
+      h1 {
+        font-size: 21px;
+      }
+      
+      .tv-icon {
+        width: 120px;
+      }
+    }
+    
+    @media screen and (max-width: 1024px) {
+      .container {
+        max-width: 92%;
+        width: 850px;
+      }
+      
+      .form-left, .form-right {
+        padding: 16px;
+      }
+      
+      input, select, textarea {
+        padding: 11px;
+        font-size: 13px;
+      }
+      
+      .tv-icon {
+        width: 110px;
+      }
+      
+      .logo {
+        width: 75px;
+      }
+    }
+    
+    @media screen and (max-width: 900px) {
+      .container {
+        max-width: 94%;
+        width: 800px;
+      }
+      
+      .form-left, .form-right {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+      
+      .form-right h2 {
+        font-size: 18px;
+      }
+      
+      .tv-label {
+        font-size: 17px;
+      }
+      
+      .notice {
+        padding: 14px;
+        font-size: 13px;
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      .container {
+        max-width: 96%;
+        width: 720px;
+        padding: 25px 20px;
+      }
+      
+      .form-left, .form-right {
+        padding: 14px 12px;
+      }
+      
+      .logo {
+        width: 70px;
+      }
+      
+      .tv-icon {
+        width: 100px;
+      }
+      
+      .submit-button-request {
+        padding: 13px;
+        font-size: 14px;
+      }
+    }
+    
+    @media screen and (max-width: 650px) {
+      .container {
+        max-width: 97%;
+        width: 600px;
+        padding: 22px 18px;
+      }
+      
+      .form-left, .form-right {
+        padding: 12px 10px;
+      }
+      
+      h1 {
+        font-size: 19px;
+      }
+      
+      .unit {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+      
+      .form-right h2 {
+        font-size: 17px;
+        margin-bottom: 15px;
+      }
+      
+      input, select, textarea {
+        padding: 10px;
+        margin-bottom: 12px;
+        font-size: 13px;
+      }
+      
+      .tv-icon {
+        width: 90px;
+      }
+      
+      .tv-label {
+        font-size: 16px;
+      }
+    }
+    
+    @media screen and (max-width: 576px) {
+      .container {
+        max-width: 98%;
+        width: 540px;
+        padding: 20px 15px;
+        border-radius: 8px;
+        border-width: 1px;
+      }
+      
+      .form-left, .form-right {
+        padding: 10px 8px;
+      }
+      
+      .logo {
+        width: 50px;
+        margin-right: 8px;
+      }
+      
+      h1 {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      
+      .college-title {
+        font-size: 18px;
+      }
+      
+      .form-right h2 {
+        font-size: 16px;
+        margin-bottom: 14px;
+      }
+      
+      .unit {
+        margin-bottom: 14px;
+      }
+      
+      .submit-button-request {
+        padding: 12px;
+        font-size: 13px;
+        border-radius: 20px;
+      }
+      
+      .tv-icon {
+        width: 80px;
+        margin-bottom: 8px;
+      }
+      
+      .tv-label {
+        font-size: 15px;
+      }
+      
+      .notice {
+        margin-top: 15px;
+        padding: 12px;
+        font-size: 12px;
+      }
+      
+      .close-button {
+        top: 5px;
+        right: 5px;
+      }
+      
+      .close-button img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .container {
+        width: 450px;
+        padding: 18px 12px;
+      }
+      
+      .form-left, .form-right {
+        padding: 8px 6px;
+      }
+      
+      input, select, textarea {
+        padding: 9px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        border-radius: 6px;
+      }
+      
+      textarea {
+        height: 70px;
+      }
+      
+      .logo {
+        width: 45px;
+      }
+      
+      .college-title {
+        font-size: 16px;
+      }
+      
+      .tv-icon {
+        width: 70px;
+      }
+    }
+    
+    @media screen and (max-width: 400px) {
+      .container {
+        width: 370px;
+        padding: 15px 10px;
+      }
+      
+      .logo {
+        width: 40px;
+      }
+      
+      h1 {
+        font-size: 16px;
+      }
+      
+      .college-title {
+        font-size: 15px;
+      }
+      
+      .form-right h2 {
+        font-size: 15px;
+        margin-bottom: 12px;
+      }
+      
+      .unit {
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      
+      .tv-icon {
+        width: 60px;
+      }
+      
+      .tv-label {
+        font-size: 14px;
+      }
+      
+      .notice {
+        border-radius: 8px;
+      }
+    }
+    
+    /* close button css*/
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+    }    .close-button img {
+      width: 24px;
+      height: 24px;
+    }
+    
+    u {
+      text-decoration: none;
+      color: var(--color-accent);
+      font-weight: bold;
+    }
+    
+    .error-message {
+      display: none;
+      background-color: var(--error-bg);
+      border-left: 4px solid var(--error-color);
+      color: var(--error-color);
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      animation: shakeError 0.6s ease;
+    }
+    
+    .error-message.show {
+      display: flex;
+      align-items: center;
+    }
+    
+    .error-message i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+      /* Animation keyframes for error shake */
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    /* Dark mode styles */
+    body.dark .container,
+    body.dark .form-right,
+    body.dark .form-left {
+      background: var(--color-gray-light);
+      border-color: #444;
+    }
+
+    body.dark .form-right h2,
+    body.dark .notice,
+    body.dark h1{
+      color: white;
+    }
+
+    body.dark .unit,
+    body.dark .tv-icon {
+      color: var(--color-gray);
+    }
+
+    body.dark .gc-logo {
+      color: var(--color-accent);
+    }
+
+    body.dark .notice {
+      background: #333;
+    }
+    
+    body.dark .tv-icon {
+      border: 2px solid var(--color-gray);
+    }
+    body.dark .file-input-label span{
+      color: black;
+    }
+
+    
+    body.dark .file-input-label:hover {
+      background-color: #7e7c7c;
+    }
+   
+.tv-label{
+      color: orange;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+body.dark .college-title {
+  color: var(--color-accent);
+
+}

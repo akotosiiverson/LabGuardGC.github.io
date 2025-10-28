@@ -1,0 +1,447 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Original classes */
+.activity,
+.request-status-container {
+
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto;
+
+}
+
+.activity__header,
+.request-status-header {
+  border-radius: 15px 15px 0px 0px;
+  background: #FF6A1A;
+  color: white;
+  padding: 20px 16px;
+}
+
+.activity__title-recent,
+.request-status-title-recent {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.Apply-Filter,
+.request-apply-filter {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.Apply-Filter{
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Filters Section */
+.filters,
+.request-filters {
+  display: block;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.filters.active,
+.request-filters.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#sortingReequest {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-inputs,
+.request-date-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-inputs p,
+.request-date-inputs p {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.date-inputs input,
+.request-date-inputs input {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Container */
+.activity__table-container,
+.request-table-container {
+  padding: 0;
+  overflow-x: auto;
+}
+
+/* Mobile Card Layout for Table */
+.activity__table,
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+}
+
+.activity__table thead,
+.request-table thead {
+  display: none;
+}
+
+.activity__table tbody,
+.request-table tbody {
+  display: block;
+}
+
+.activity__table tr,
+.request-table tr {
+  display: block;
+  background: #ebe9e98a;
+
+  padding: 16px;
+  margin: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: all 0.3s ease;
+}
+
+.activity__table tr:hover,
+.request-table tr:hover {
+  background: #ff6a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.activity__table tr:last-child,
+.request-table tr:last-child {
+  margin-bottom: 16px;
+}
+
+.activity__table td,
+.request-table td {
+  display: block;
+  padding: 8px 0;
+  border: none;
+  text-align: left;
+  position: relative;
+  padding-left: 40%;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.activity__table td::before,
+.request-table td::before {
+  content: attr(data-label) ": ";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  font-weight: 600;
+  color: #FF6A1A;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  width: 35%;
+}
+
+
+
+/* Tablet Styles (768px and up) */
+@media (min-width: 768px) {
+  .activity,
+  .request-status-container {
+    max-width: 1200px;
+  }
+  
+  .activity__header,
+  .request-status-header {
+    padding: 32px;
+    
+
+  }
+  
+  .activity__title-recent,
+
+  .request-status-title-recent,
+  .request-apply-filter {
+    font-size: 30px;
+    text-align: left;
+    margin-top: 19px;
+  }
+  .Apply-Filter{
+  display: none;
+  }
+  
+  .filters,
+  .request-filters {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  #sortingReequest {
+    width: auto;
+    min-width: 150px;
+    margin-bottom: 0;
+  }
+  .sortingReequest {
+    width: auto;
+    min-width: 150px;
+    margin-bottom: 0;
+  }
+  
+  .date-inputs,
+  .request-date-inputs {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .date-inputs p,
+  .request-date-inputs p {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+  
+  /* Switch to traditional table layout */
+  .activity__table,
+  .request-table {
+    display: table;
+  }
+  
+  .activity__table thead,
+  .request-table thead {
+    display: table-header-group;
+  }
+  
+  .activity__table tbody,
+  .request-table tbody {
+    display: table-row-group;
+  }
+    
+  .activity__table tr,
+  .request-table tr {
+    display: table-row;
+    background: transparent;
+    border-bottom: 1px solid #e5e7eb;
+    
+    padding: 0;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  .activity__table tr:hover,
+  .request-table tr:hover {
+    background: #ff6a1a0c;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .activity__table th,
+  .activity__table td,
+  .request-table th,
+  .request-table td {
+    display: table-cell;
+    padding: 16px;
+    text-align: left;
+    vertical-align: middle;
+  }
+    
+  .activity__table th,
+  .request-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  body.dark .request-table th {
+    background: #393939;
+    color: #FFF;
+}
+  
+  .activity__table td,
+  .request-table td {
+    position: static;
+    padding-left: 16px;
+  }
+  
+  .activity__table td::before,
+  .request-table td::before {
+    display: none;
+  }
+  
+  .activity__table-container,
+  .request-table-container {
+    padding: 0;
+  }
+}
+
+/* Desktop Styles (1024px and up) */
+@media (min-width: 1024px) {
+  .activity__header,
+  .request-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+    
+  .activity__title-recent,
+  .request-status-title-recent {
+    margin-bottom: 0;
+  }
+  
+  .filters,
+  .request-filters {
+    margin-top: 0;
+  }
+  
+  .activity__table th,
+  .activity__table td,
+  .request-table th,
+  .request-table td {
+    padding: 20px;
+  }
+}
+
+/* Responsive Styles for Mobile View */
+@media (max-width: 576px) {
+  .filters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .filters p {
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .filters select,
+  .filters input {
+    font-size: 10px;
+    width: 100%;
+  }
+  .request-date-inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap; /* Prevent wrapping to next line */
+  }
+
+  .request-date-inputs p {
+    font-size: 10px;
+    margin: 0;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  .request-date-inputs input {
+    font-size: 10px;
+    flex: 1;
+    margin-left: 5px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+}
+
+@media (max-width: 576px) {
+  .request-date-inputs p {
+    display: none;
+  }
+}
+
+@media (min-width: 577px) {
+  .request-date-inputs p {
+    display: block;
+  }
+}
+
+/* Fix for very small screens (375px and below) */
+@media (max-width: 375px) {
+  .request-date-inputs {
+    gap: 8px;
+  }
+  
+  .request-date-inputs input {
+    padding: 8px;
+    font-size: 10px;
+    min-width: 0; /* Allow inputs to shrink below their default size */
+    width: calc(50% - 4px); /* Each takes roughly half minus gap */
+    margin-left: 0; /* Remove left margin to prevent overflow */
+  }
+  
+  /* Add smaller calendar icon for date inputs */
+  .request-date-inputs input[type="date"] {
+    padding-right: 6px; /* Make space for the calendar icon */
+  }
+}
+
+/* Smooth Animations */
+* {
+  transition: all 0.2s ease;
+}
+
+/* Focus States for Accessibility */
+input:focus,
+select:focus,
+.filter:focus,
+.request-filter:focus {
+  outline: 2px solid #FF6A1A;
+  outline-offset: 2px;
+}
