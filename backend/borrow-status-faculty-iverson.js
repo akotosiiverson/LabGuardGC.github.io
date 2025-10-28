@@ -47,7 +47,12 @@ function renderRequestStatus() {
 
   onSnapshot(reportsQuery, (querySnapshot) => {
     let reportSummary = '';
-    
+
+    // Counters to aggregate log output (avoid per-document logging)
+    let processedCount = 0;
+    let displayedCount = 0;
+    const counts = { pending: 0, approved: 0, declined: 0 };
+
     // Convert to array and sort by timestamp (newest first)
     const docs = querySnapshot.docs.map(doc => ({
       id: doc.id,
@@ -66,11 +71,17 @@ function renderRequestStatus() {
       if (currentStartDate && jsDate < currentStartDate) return;
       if (currentEndDate && jsDate > currentEndDate) return;
 
+      // Track counts and avoid logging per document
       const status = normalizeStatus(data.statusReport);
-      console.log(`Status: ${status} Filter: ${currentStatusFilter}`);
+      processedCount++;
+      if (status === 'pending') counts.pending++;
+      else if (status === 'approved') counts.approved++;
+      else if (status === 'declined') counts.declined++;
 
       // Apply status filter
       if (currentStatusFilter !== "all" && status !== currentStatusFilter) return;
+
+      displayedCount++;
 
       const formattedDate = jsDate.toLocaleDateString('en-US', {
         year: 'numeric',
@@ -110,6 +121,9 @@ function renderRequestStatus() {
 
     reportListEl.innerHTML = reportSummary;
     attachModalAndActionListeners();
+
+    // Single aggregated log per snapshot to reduce storage/console noise
+    console.log(`BorrowList snapshot: processed=${processedCount}, displayed=${displayedCount}, pending=${counts.pending}, approved=${counts.approved}, declined=${counts.declined}, filter=${currentStatusFilter}`);
   });
 }
 

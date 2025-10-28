@@ -70,7 +70,7 @@ logoutBtns.forEach(logoutBtn => {
         if (isMobile) {
           window.location.href = 'index.html';  
         } else {
-          window.location.href = '/Computer-Lab-Smart-Maintenance-System/index.html';
+          window.location.href = '/index.html';
         }
       }, 500);
     });
