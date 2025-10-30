@@ -141,7 +141,7 @@ body{
     cursor:none;
     opacity:.5;
 }
-.rqst-btn, .add-btn, .edit-button {
+.rqst-btn, .add-btn, .edit-button , .editform-btn {
     width: 100%;
     background-color:  var(--color-accent);
     font-family: 'Roboto', sans-serif;

@@ -5,7 +5,9 @@ import {
   collection,
   getDocs,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getStorage,
@@ -19,6 +21,39 @@ import {
   db,
 } from "./firebase-config.js";
 const itemMap = {}; // Store items for quick lookup
+
+// Default text if admin hasn't configured anything yet
+const defaultNoticeText = "This report form is intended for reporting any issues with laboratory equipment at Gordon College. If you encounter a problem, please complete the form with accurate details to ensure timely inspection and resolution by the Management Information Unit (MIS).";
+
+function escapeHtml(input) {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+async function getReportNoticeText() {
+  try {
+    const ref = doc(db, 'formTexts', 'borrowForm');
+    const snap = await getDoc(ref);
+    if (snap.exists() && snap.data().noticeText) return String(snap.data().noticeText);
+    return defaultNoticeText;
+  } catch (err) {
+    console.error('Failed to load notice text:', err);
+    return defaultNoticeText;
+  }
+}
+
+function buildNoticeHtml(text) {
+  const safeText = escapeHtml(text);
+  return `
+            <div class="notice">
+              <strong>Important Information:</strong>
+              <p>${safeText}</p>
+            </div>`;
+}
 
 async function displayItems() {
   try {
@@ -64,7 +99,7 @@ items.sort((a, b) => {
     document.querySelector('.available-item').innerHTML = itemHTML;
 
     document.querySelectorAll('.rqst-btn').forEach((button) => {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
        const itemId = button.dataset.itemId;
       const product = itemMap[itemId];
         // Handle "OTHERS" case
@@ -78,6 +113,8 @@ items.sort((a, b) => {
           btn.disabled = true;
         });
         document.querySelector('.available-item').classList.add('no-scroll');
+
+        const noticeHtml = buildNoticeHtml(await getReportNoticeText());
 
         let formHTML = `
           <button class="close-button js-close-button">
@@ -121,6 +158,20 @@ items.sort((a, b) => {
               </div>
 
               <textarea class="issue" placeholder="Problem/issue:" required></textarea>
+              <!-- Agreement error (hidden by default) -->
+              <div id="agreement-error" class="agreement-error">
+                        <i class='bx bx-error-circle'></i>
+                      - <span>Please acknowledge and accept Gordon College\'s Terms and Policies before proceeding.</span>
+                    </div>
+
+              <!-- Agreement checkbox -->
+              <div class="agreement-row" style="margin-top:12px;display:flex;align-items:center;gap:8px;">
+                <input type="checkbox" id="report-agree-checkbox" class="report-agree-checkbox" />
+                <label for="report-agree-checkbox" style="margin:0;">I agree to Gordon College Terms & Policy</label>
+              </div>
+
+              
+
               <button class="submit-button-request js-submit-button-report" type="submit" data-product-name="${product.name}">SUBMIT</button>
             </form>
           </div>
@@ -129,10 +180,10 @@ items.sort((a, b) => {
             <h2><u>REPORT FORM</u></h2>
             <img src="${product.image}" data-report-image="${product.image}" alt="${product.name}" class="tv-icon report-image" />
             <p class="tv-label">${product.name}</p>
-            <div class="notice">
-              <strong>Important Information:</strong>
-              <p>This report form is intended for reporting any issues with laboratory equipment at Gordon College. If you encounter a problem, please complete the form with accurate details to ensure timely inspection and resolution by the Management Information Unit (MIS).</p>
-            </div>
+            ${noticeHtml}
+            <!-- Terms & Policy Modal -->
+       
+
           </div>
         `;
 

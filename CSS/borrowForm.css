@@ -172,7 +172,7 @@
     width: 24px;
     height: 24px;
   }
-     .error-message {
+     .error-message ,.agreement-error {
     display: none;
     background-color: var(--error-bg);
     border-left: 4px solid var(--error-color);
@@ -184,12 +184,12 @@
     animation: shakeError 0.6s ease;
 }
 
-.error-message.show {
+.error-message.show, .agreement-error.show {
     display: flex;
     align-items: center;
 }
 
-.error-message i {
+.error-message i , .agreement-error i {
     margin-right: 10px;
     font-size: 18px;
 }
