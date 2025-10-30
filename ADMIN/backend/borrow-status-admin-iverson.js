@@ -77,21 +77,21 @@ function renderFilteredReports() {
           data-img="${data.downloadURL || ''}"
           data-purpose="${data.purpose || 'No details provided'}"
           data-full-name="${data.fullName || 'Unknown'}">
-       <td>${data.fullName || 'Unknown'}</td>
-          <td>${formattedDate}</td>
-         <td>${new Date(data.borrowDate).toLocaleDateString("en-US", {
+       <td data-label="Faculty Name">${data.fullName || 'Unknown'}</td>
+          <td data-label="Request Date">${formattedDate}</td>
+         <td data-label="Borrow Date">${new Date(data.borrowDate).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric"
         })}</td>
-        <td>${new Date(data.returnDate).toLocaleDateString("en-US", {
+        <td data-label="Return Date">${new Date(data.returnDate).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric"
         })}</td>
-          <td>${data.equipment}</td>
-          <td><span class="status status--${status}">${actionButtons}</span></td>
-          <td><span class="view-details td-name-clickable" ><i class='bx bx-info-circle'></i> View Details</span></td>
+          <td data-label="Unit">${data.equipment}</td>
+          <td data-label="Status"><span class="status status--${status}">${actionButtons}</span></td>
+          <td data-label="Action"><span class="view-details td-name-clickable" ><i class='bx bx-info-circle'></i> View Details</span></td>
       </tr>
     `;
   });
