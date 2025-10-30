@@ -15,24 +15,52 @@ export function printYourrequestInfo() {
   const issue = document.querySelector('.issue');
   const imageInput = document.querySelector('#upload-report-image');
   const errorMessage = document.querySelector('#error-message');
+  const agreementError = document.querySelector('#agreement-error');
+  const checkButton = document.querySelector('.report-agree-checkbox');
   const statusReport = 'Pending';
 
   if (requestButton) {
     requestButton.addEventListener('click', async (e) => {
       e.preventDefault();
+      // Validate form fields and show all applicable errors (don't return early)
+      let hasError = false;
 
-      // Validate form fields
-      if (!roomNumber.value || !pcNumber.value || !issue.value) {
-        // Show error message
+      function showFieldError(msg) {
+        if (!errorMessage) return;
+        const span = errorMessage.querySelector('span');
+        if (span) span.textContent = msg;
+        errorMessage.style.display = 'block';
         errorMessage.classList.add('show');
-        errorMessage.querySelector('span').textContent = 'Please complete all required fields.';
-        
-        // Hide error message after 3 seconds
         setTimeout(() => {
           errorMessage.classList.remove('show');
+          errorMessage.style.display = 'none';
         }, 3000);
-        return;
       }
+
+      function showAgreementError(msg) {
+        if (!agreementError) return;
+        const span = agreementError.querySelector('span');
+        if (span) span.textContent = msg;
+        agreementError.style.display = 'block';
+        agreementError.classList.add('show');
+        setTimeout(() => {
+          agreementError.classList.remove('show');
+          agreementError.style.display = 'none';
+        }, 3000);
+      }
+
+      if (!roomNumber.value || !pcNumber.value || !issue.value) {
+        showFieldError('Please complete all required fields.');
+        hasError = true;
+      }
+
+      if (!checkButton || !checkButton.checked) {
+        showAgreementError("Please acknowledge and accept Gordon College's Terms and Policies before proceeding");
+        console.log('Agreement not checked or checkbox missing');
+        hasError = true;
+      }
+
+      if (hasError) return;
 
       // Validate file size (5MB limit)
       const imageFile = imageInput.files[0];

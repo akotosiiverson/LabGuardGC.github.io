@@ -54,6 +54,14 @@ async function displayItems() {
   const addItemHTML = `
     <div class="item-container">
       <div class="img-container">
+        <img src="asset/icons/edit-form-icon.png" alt="Add Icon">
+      </div>
+      <p class="item-name"></p>
+      <button class="editform-btn">EDIT FORM</button>
+    </div>
+
+    <div class="item-container">
+      <div class="img-container">
         <img src="asset/icons/add-icon.png" alt="Add Icon">
       </div>
       <p class="item-name"></p>
@@ -368,6 +376,131 @@ async function displayItems() {
       }
     });
   });
+
+  // ---- Edit Borrow Form (Notice and Terms & Policy) ----
+  async function loadBorrowFormTexts() {
+    try {
+      const refDoc = doc(db, 'formTexts', 'borrowForm');
+      const snap = await getDoc(refDoc);
+      return snap.exists() ? snap.data() : {
+        noticeText: 'Please read the notice carefully before submitting a borrow request.',
+        termsText: 'Terms & Policy goes here. Define borrowing rules, duration, responsibilities, and penalties.'
+      };
+    } catch (e) {
+      console.error('Failed to load borrow form texts', e);
+      return {
+        noticeText: 'Please read the notice carefully before submitting a borrow request.',
+        termsText: 'Terms & Policy goes here. Define borrowing rules, duration, responsibilities, and penalties.'
+      };
+    }
+  }
+
+  function openBorrowFormEditor(current) {
+    document.querySelector('.available-item').classList.add('no-scroll');
+
+    const formHTML = `
+      <div class="details-modal-content" style="max-width:720px;width:92%;background:#ffffff;border-radius:12px;padding:16px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+        <div class="details-modal-header" style="display:flex;align-items:center;justify-content:space-between;">
+          <h3 class="details-modal-title" style="margin:0;color:#0f172a;font-size:22px;">Post a Notice</h3>
+          <button class="details-modal-close" aria-label="Close" style="background:transparent;border:0;font-size:20px;line-height:1;cursor:pointer;color:#64748b">&times;</button>
+        </div>
+        <div class="details-modal-sub" style="color:#64748b;font-size:13px;margin:6px 0 12px;">Fill in the details below and choose Save to confirm or Cancel to discard.</div>
+        <div class="details-modal-body" style="display:flex;flex-direction:column;gap:10px;">
+          <label style="font-weight:600;color:#0f172a;">Notice:</label>
+          <input class="notice-text" type="text" placeholder="Enter a short subject" value="${(current.noticeText || '').replace(/"/g,'&quot;')}" style="padding:10px 12px;border:1px solid #e6e8eb;border-radius:8px;outline:none;" />
+
+          <label style="font-weight:600;color:#0f172a;margin-top:6px;">Terms and Policies:</label>
+          <textarea class="terms-text" rows="8" placeholder="Type your notice here..." style="padding:10px 12px;border:1px solid #e6e8eb;border-radius:8px;outline:none;">${current.termsText || ''}</textarea>
+
+          <div id="error-message" class="error-message" style="display:none;margin-top:4px;">
+            <i class='bx bx-error-circle'></i>
+            <span>Please provide both Subject and Message.</span>
+          </div>
+
+          <div class="button-row" style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
+            <button class="save-button" style="display:flex;align-items:center;gap:8px;background:#ff6a00;border:1px solid #ff6a00;color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;">
+              <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#fff;color:#ff6a00;display:flex;align-items:center;justify-content:center;font-size:12px;">✎</span>
+              Save
+            </button>
+            <button class="cancel-button" style="background:#fff;border:1px solid #d0d7de;color:#0f172a;border-radius:8px;padding:8px 12px;cursor:pointer;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const container = document.createElement('div');
+    container.classList.add('details-modal', 'active');
+    container.innerHTML = formHTML;
+    mainDashboard.appendChild(container);
+
+    const closeModal = () => {
+      container.remove();
+      document.querySelector('.available-item').classList.remove('no-scroll');
+    };
+
+    container.querySelector('.details-modal-close').addEventListener('click', closeModal);
+    container.querySelector('.cancel-button').addEventListener('click', closeModal);
+    container.addEventListener('click', (e) => { if (e.target === container) closeModal(); });
+
+    // Save handler
+    container.querySelector('.save-button').addEventListener('click', async () => {
+      const noticeText = container.querySelector('.notice-text').value.trim();
+      const termsText = container.querySelector('.terms-text').value.trim();
+      if (!noticeText || !termsText) {
+        const el = container.querySelector('#error-message');
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 3000);
+        return;
+      }
+      try {
+        await setDoc(doc(db, 'formTexts', 'borrowForm'), { noticeText, termsText });
+        closeModal();
+      } catch (e) {
+        console.error('Failed to save borrow form texts', e);
+        alert('Failed to save. Please try again.');
+      }
+    });
+
+    // Preview Terms modal (optional button; only wire up if present)
+    const previewBtn = container.querySelector('.preview-terms-button');
+    if (previewBtn) previewBtn.addEventListener('click', () => {
+      const terms = container.querySelector('.terms-text').value.trim();
+      const previewHTML = `
+        <div class="details-modal-content">
+          <div class="details-modal-header">
+            <h3 class="details-modal-title">Terms & Policy</h3>
+            <button class="details-modal-close js-close-preview">&times;</button>
+          </div>
+          <div class="details-modal-body">
+            <div class="terms-content" style="white-space:pre-wrap;max-height:50vh;overflow:auto;">${terms || 'No terms provided.'}</div>
+            <div class="button-row" style="display:flex;gap:8px;margin-top:12px;">
+              <button class="agree-button">I Agree</button>
+              <button class="close-button">Close</button>
+            </div>
+          </div>
+        </div>`;
+
+      const preview = document.createElement('div');
+      preview.classList.add('details-modal', 'active');
+      preview.innerHTML = previewHTML;
+      mainDashboard.appendChild(preview);
+
+      const closePreview = () => preview.remove();
+      preview.querySelector('.js-close-preview').addEventListener('click', closePreview);
+      preview.querySelector('.close-button').addEventListener('click', closePreview);
+      preview.addEventListener('click', (e) => { if (e.target === preview) closePreview(); });
+      preview.querySelector('.agree-button').addEventListener('click', closePreview);
+    });
+  }
+
+  // Hook up the tile button
+  const editFormBtn = document.querySelector('.editform-btn');
+  if (editFormBtn) {
+    editFormBtn.addEventListener('click', async () => {
+      const current = await loadBorrowFormTexts();
+      openBorrowFormEditor(current);
+    });
+  }
 
   
 }

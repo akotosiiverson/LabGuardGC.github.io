@@ -1,0 +1,71 @@
+.details-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.details-modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.details-modal textarea {
+  width: 100%;
+  margin: 8px 0 16px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.details-modal textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.details-modal .save-button,
+.details-modal .cancel-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.details-modal .save-button {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.details-modal .cancel-button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.details-modal .save-button:hover {
+  background-color: #357abd;
+}
+
+.details-modal .cancel-button:hover {
+  background-color: #e5e5e5;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

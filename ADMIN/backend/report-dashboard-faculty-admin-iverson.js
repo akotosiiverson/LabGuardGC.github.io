@@ -1,4 +1,3 @@
-
 import { printYourrequestInfo } from '../backend/reportForm-admin-iverson.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
@@ -61,6 +60,14 @@ async function displayItems() {
   });
 
   const addItemHTML = `
+   <div class="item-container">
+      <div class="img-container">
+        <img src="asset/icons/edit-form-icon.png" alt="Add Icon">
+      </div>
+      <p class="item-name"></p>
+      <button class="editform-btn">EDIT FORM</button>
+    </div>
+    
     <div class="item-container">
       <div class="img-container">
         <img src="asset/icons/add-icon.png" alt="Add Icon">
@@ -350,6 +357,91 @@ async function displayItems() {
       }
     });
   });
+
+  // Load saved form texts
+async function loadFormTexts() {
+  try {
+    const formTextsRef = doc(db, 'formTexts', 'borrowForm');
+    const docSnap = await getDoc(formTextsRef);
+    return docSnap.exists() ? docSnap.data() : {
+      noticeText: "This item/equipment belongs to Gordon College..." // default text
+    };
+  } catch (error) {
+    console.error('Error loading form texts:', error);
+    return null;
+  }
+}
+
+// Edit Form Button Handler
+document.querySelector('.editform-btn').addEventListener('click', async () => {
+  const formTexts = await loadFormTexts();
+  document.querySelector('.available-item').classList.add('no-scroll');
+  
+  const formHTML = `
+    <div class="details-modal-content" style="max-width:720px;width:92%;background:#ffffff;border-radius:12px;padding:16px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,0.15);">
+      <div class="details-modal-header" style="display:flex;align-items:center;justify-content:space-between;">
+        <h3 style="margin:0;color:#0f172a;font-size:22px;">Post a Notice</h3>
+        <button class="details-modal-close" aria-label="Close" style="background:transparent;border:0;font-size:20px;line-height:1;cursor:pointer;color:#64748b">&times;</button>
+      </div>
+      <div class="details-modal-sub" style="color:#64748b;font-size:13px;margin:6px 0 12px;">Fill in the details below and choose Save to confirm or Cancel to discard.</div>
+      <div class="details-modal-body" style="display:flex;flex-direction:column;gap:10px;">
+        <label style="font-weight:600;color:#0f172a;">Important Information:</label>
+        <textarea class="notice-text" rows="6" placeholder="Type your Important Information here..." style="padding:10px 12px;border:1px solid #e6e8eb;border-radius:8px;outline:none;">${formTexts.noticeText}</textarea>
+        
+        <div id="error-message" class="error-message" style="display:none;margin-top:4px;">
+          <i class='bx bx-error-circle'></i>
+          <span>Please provide a notice text.</span>
+        </div>
+        
+        <div class="button-row" style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
+          <button class="save-button" style="display:flex;align-items:center;gap:8px;background:#ff6a00;border:1px solid #ff6a00;color:#fff;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;">
+            <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:#fff;color:#ff6a00;display:flex;align-items:center;justify-content:center;font-size:12px;">✎</span>
+            Save
+          </button>
+          <button class="cancel-button" style="background:#fff;border:1px solid #d0d7de;color:#0f172a;border-radius:8px;padding:8px 12px;cursor:pointer;">Cancel</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const container = document.createElement('div');
+  container.classList.add('details-modal', 'active');
+  container.innerHTML = formHTML;
+  mainDashboard.appendChild(container);
+
+  // Close handlers
+  const closeModal = () => {
+    container.remove();
+    document.querySelector('.available-item').classList.remove('no-scroll');
+  };
+
+  container.querySelector('.details-modal-close').addEventListener('click', closeModal);
+  container.querySelector('.cancel-button').addEventListener('click', closeModal);
+  container.addEventListener('click', e => e.target === container && closeModal());
+
+  // Save handler
+  container.querySelector('.save-button').addEventListener('click', async () => {
+    const noticeText = container.querySelector('.notice-text').value.trim();
+    
+    if (!noticeText) {
+      const errorEl = container.querySelector('#error-message');
+      errorEl.style.display = 'block';
+      setTimeout(() => errorEl.style.display = 'none', 3000);
+      return;
+    }
+
+    try {
+      await setDoc(doc(db, 'formTexts', 'borrowForm'), {
+        noticeText,
+        updatedAt: serverTimestamp()
+      });
+      closeModal();
+    } catch (error) {
+      console.error('Error saving form texts:', error);
+      alert('Failed to save changes. Please try again.');
+    }
+  });
+});
 }
 
     // Add Button Handler
