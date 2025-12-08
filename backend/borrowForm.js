@@ -1,5 +1,5 @@
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import { addBorrow } from '../backend/firebase-config.js';
+import { addBorrow } from './firebase-config.js';
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -11,6 +11,7 @@ export function printYourrequestInfo() {
   const borrowedDate = document.querySelector('.borrowed-date');
   const returnDate = document.querySelector('.return-date');
   const purpose = document.querySelector('.purpose');
+  const cb = document.querySelector('.agree-checkbox');
   const statusReport = 'Pending';
 
   if (requestButton) {
@@ -19,32 +20,63 @@ export function printYourrequestInfo() {
 
       // Check if borrowedDate is after returnDate
             const errorMessage = document.querySelector(".error-message");
+      const agreementMessage = document.querySelector(".agreement-error");
 
-      function showError() {
-        document.querySelector(".error-message").classList.add("show");
-
+      // show helpers accept message and can be called multiple times
+      function showError(msg) {
+        if (!errorMessage) return;
+        const span = errorMessage.querySelector('span');
+        if (span) span.textContent = msg || 'Invalid date.';
+        errorMessage.classList.add("show");
         // Automatically hide after 3 seconds
         setTimeout(() => {
-          document.querySelector(".error-message").classList.remove("show");
+          errorMessage.classList.remove("show");
         }, 3000);
       }
 
-      // Validate borrowedDate and returnDate
+      function showAgreementMessageError(msg) {
+        if (!agreementMessage) return;
+        const span = agreementMessage.querySelector('span');
+        if (span) span.textContent = msg || "Please acknowledge and accept the terms.";
+        agreementMessage.classList.add("show");
+        // Automatically hide after 3 seconds
+        setTimeout(() => {
+          agreementMessage.classList.remove("show");
+        }, 3000);
+      }
+
+      // Collect all validation results and show all relevant messages
+      let hasError = false;
+
+      // required dates
       if (!borrowedDate.value || !returnDate.value) {
-        showError();
-        return;
+        showError('Please enter both borrowed and return dates.');
+        hasError = true;
       }
 
-            // Example borrowed/return date validation
-      if (dayjs(borrowedDate.value).isAfter(dayjs(returnDate.value))) {
-        showError();
-        return;
+      // only run date-specific checks if both dates are present
+      if (borrowedDate.value && returnDate.value) {
+        if (dayjs(borrowedDate.value).isAfter(dayjs(returnDate.value))) {
+          showError('Borrow date must be before the return date.');
+          hasError = true;
+        }
+
+        if (dayjs(borrowedDate.value).isBefore(dayjs(), 'day')) {
+          showError('Borrow date cannot be in the past.');
+          hasError = true;
+        }
+      }
+      // agreement check (still independent)
+      if (!cb.checked) {
+        showAgreementMessageError("Please acknowledge and accept Gordon College's Terms and Policies before proceeding.");
+        hasError = true;
       }
 
-      if (dayjs(borrowedDate.value).isBefore(dayjs(), 'day')) {
-        showError();
+      if (hasError) {
+        // stop submission — all applicable errors have been shown
         return;
       }
+     
 
 
       // Get current user displayName and uid asynchronously
