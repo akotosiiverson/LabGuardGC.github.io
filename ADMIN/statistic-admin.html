@@ -12,21 +12,18 @@
       <link rel='stylesheet' href='/CSS/statistic-dashboard.css'>
   <link rel='stylesheet' href='/CSS/dashboard-filters.css'>
 
+
     <!-- Chart.js for data visualization -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
     <!-- Boxicons Icon Library -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-
-
-
 
     <title>Gordon College - Dashboard</title>
 </head>
 
 
-<body>
+<body style="background-color: #eee;">  
 
     <!-- ===================================
      SIDEBAR NAVIGATION
@@ -124,19 +121,317 @@
                 <!-- Dashboard Link -->
                 <a href="#" class="navbar__link"></a>
             </div>
+                        <!-- Right Side: Theme Toggle -->
+            <div>
+                <input type="checkbox" id="theme-toggle"style="display: none;">
+            </div>
         </nav>
         <!-- End of Top Navigation Bar -->
 
-        <!-- ===================================
-      Main Content Container
-     =================================== -->
-  <section class="dashboard">
-    <!-- The dashboard will be populated by statistic-faculty.js -->
-    <div class="loading-container">
-      <div class="loading-spinner"></div>
-      <p>Loading statistics...</p>
-    </div>
-  </section>
+
+    <!-- ===================================
+            Main Content Container
+    =================================== -->
+    <section class="dashboard" style="position: relative; margin: 20px auto;">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header" >
+            <div class="header-left">
+                <h1 class="dashboard__title" style="color: #FF6A1A;">Computer Lab Analytics</h1>
+                <p class="dashboard__subtitle">Last updated: mnth day, year</p>
+                <p class="dashboard__subtitle">LOADING...</p>
+            </div>
+        </div>
+
+        <!-- Date Filters -->
+        <div class="dashboard__filters">
+            <div class="filter-group">
+                <label for="startDate">From:</label>
+                <input type="date" id="startDate" class="date-filter">
+            </div>
+            <div class="filter-group">
+                <label for="endDate">To:</label>
+                <input type="date" id="endDate" class="date-filter">
+            </div>
+            <button id="applyFilter" class="filter-button">Apply Filter</button>
+            <button id="resetFilter" class="filter-button filter-button--reset">Reset</button>
+        </div>
+
+        <!-- Summary Cards Grid -->
+        <div class="dashboard__summary">
+            <!-- Total Reports Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-report'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Total Reports</p>
+                </div>
+            </div>
+
+            <!-- Pending Reports Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-time-five'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Pending Reports</p>
+                </div>
+            </div>
+
+            <!-- Processing Reports Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-cog'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Processing Reports</p>
+                </div>
+            </div>
+
+            <!-- Total Borrows Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-package'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Total Borrows</p>
+                </div>
+            </div>
+
+            <!-- Pending Borrows Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-hourglass'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Pending Borrows</p>
+                </div>
+            </div>
+
+            <!-- PCs In Repair Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-wrench'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>PCs In Repair</p>
+                </div>
+            </div>
+
+            <!-- Total Rooms Card -->
+            <div class="summary-card" title="Total number of computer lab rooms in the system">
+                <div class="summary-icon"><i class='bx bxs-buildings'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Total Rooms</p>
+                </div>
+            </div>
+
+            
+            <!-- Total PCs Card -->
+            <div class="summary-card">
+                <div class="summary-icon"><i class='bx bxs-devices'></i></div>
+                <div class="summary-content">
+                    <h3>...</h3>
+                    <p>Total PCs</p>
+                </div>
+            </div>
+            
+            <div></div>
+        </div>
+
+        <!-- Dashboard Grid with Charts -->
+        <div class="dashboard__grid">
+            
+            <!-- Most Reported Components Card -->
+            <div class="dashboard-card">
+                <div class="dashboard-card__header">
+                    <h2>Most Reported Components</h2>
+                </div>
+                <div class="dashboard-card__body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class='bx bxs-pie-chart-alt-2'></i>
+                            <p>Pie Chart</p>
+                        </div>
+                    </div>
+                    <div class="stats-list">
+                        <ul>
+                            <li>
+                                <span class="item-name">Keyboard</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 30%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Monitor</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 24%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Mouse</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 20%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">CPU</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 16%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Headset</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 10%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Most Borrowed Items Card -->
+            <div class="dashboard-card">
+                <div class="dashboard-card__header">
+                    <h2>Most Borrowed Items</h2>
+                </div>
+                <div class="dashboard-card__body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class='bx bxs-pie-chart-alt-2'></i>
+                            <p>Pie Chart</p>
+                        </div>
+                    </div>
+                    <div class="stats-list">
+                        <ul>
+                            <li>
+                                <span class="item-name">Projector</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 30%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Laptop</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 25%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Tablet</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 20%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Speaker</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 15%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Microphone</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 10%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Most Reported Rooms Card -->
+            <div class="dashboard-card">
+                <div class="dashboard-card__header">
+                    <h2>Most Reported Rooms</h2>
+                </div>
+                <div class="dashboard-card__body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class='bx bxs-bar-chart-alt-2'></i>
+                            <p>Bar Chart</p>
+                        </div>
+                    </div>
+                    <div class="stats-list">
+                        <ul>
+                            <li>
+                                <span class="item-name">Room ...</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 34%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Room ...</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 27%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Room ...</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 20%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Room ...</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 13%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="item-name">Room ...</span>
+                                <div class="item-bar-container">
+                                    <div class="item-bar" style="width: 6%"></div>
+                                    <span class="item-count">...</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PC Repair Status Card -->
+            <div class="dashboard-card">
+                <div class="dashboard-card__header">
+                    <h2>PC Repair Status</h2>
+                </div>
+                <div class="dashboard-card__body">
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class='bx bxs-doughnut-chart'></i>
+                            <p>Doughnut Chart</p>
+                        </div>
+                    </div>
+                    <div class="stats-list">
+                        <div class="status-summary">
+                            <div class="status-item">
+                                <span class="status-label">Available</span>
+                                <span class="status-value">...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">In Repair</span>
+                                <span class="status-value">...</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Total PCs</span>
+                                <span class="status-value">...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     </main>
     <!-- End of MAIN CONTENT AREA -->
@@ -154,6 +449,7 @@
     <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
     <script type="module" src="/ADMIN/backend/adminFirewall.js"></script>
+  
 </body>
 
 </html>

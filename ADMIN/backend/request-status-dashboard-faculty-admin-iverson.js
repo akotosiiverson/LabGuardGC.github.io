@@ -17,6 +17,116 @@ let currentStatusFilter = "All";
 let currentStartDate = null;
 let currentEndDate = null;
 
+// Simple fullscreen image viewer with zoom/pan
+function openImageViewer(src) {
+  // Prevent multiple viewers
+  if (document.querySelector('.image-viewer-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'image-viewer-overlay';
+  overlay.style.cssText = `
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999;
+    display: flex; align-items: center; justify-content: center; cursor: grab;
+  `;
+
+  // Toolbar
+  const toolbar = document.createElement('div');
+  toolbar.style.cssText = `
+    position: absolute; top: 16px; right: 16px; display: flex; gap: 8px;
+  `;
+  const makeBtn = (label, title) => {
+    const btn = document.createElement('button');
+    btn.textContent = label;
+    btn.title = title;
+    btn.style.cssText = `
+      background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 10px; border-radius: 6px; font-size: 14px; cursor: pointer;
+      backdrop-filter: blur(2px);
+    `;
+    btn.onmouseenter = () => (btn.style.background = 'rgba(255,255,255,0.2)');
+    btn.onmouseleave = () => (btn.style.background = 'rgba(255,255,255,0.1)');
+    return btn;
+  };
+
+  const btnZoomIn = makeBtn('+', 'Zoom In');
+  const btnZoomOut = makeBtn('−', 'Zoom Out');
+  const btnReset = makeBtn('Reset', 'Reset Zoom');
+  const btnClose = makeBtn('×', 'Close');
+  toolbar.append(btnZoomIn, btnZoomOut, btnReset, btnClose);
+
+  // Image container
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'Report Image';
+  img.style.cssText = `
+    max-width: 90vw; max-height: 85vh; user-select: none; pointer-events: none;
+    transform-origin: center center; transition: transform 80ms ease-out;
+  `;
+
+  const imgWrap = document.createElement('div');
+  imgWrap.style.cssText = `
+    position: relative; overflow: hidden; touch-action: none;
+  `;
+  imgWrap.appendChild(img);
+
+  overlay.append(toolbar, imgWrap);
+  document.body.appendChild(overlay);
+
+  // State for zoom/pan
+  const state = { scale: 1, min: 0.5, max: 4, tx: 0, ty: 0, panning: false, startX: 0, startY: 0 };
+
+  const apply = () => {
+    img.style.transform = `translate(${state.tx}px, ${state.ty}px) scale(${state.scale})`;
+  };
+
+  const zoomBy = (factor) => {
+    state.scale = Math.min(state.max, Math.max(state.min, state.scale * factor));
+    apply();
+  };
+
+  const reset = () => {
+    state.scale = 1; state.tx = 0; state.ty = 0; apply();
+  };
+
+  // Events
+  btnZoomIn.onclick = () => zoomBy(1.2);
+  btnZoomOut.onclick = () => zoomBy(1/1.2);
+  btnReset.onclick = reset;
+  btnClose.onclick = () => document.body.removeChild(overlay);
+
+  overlay.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 1.1 : 0.9;
+    zoomBy(delta);
+  }, { passive: false });
+
+  const onDown = (x, y) => {
+    state.panning = true; state.startX = x - state.tx; state.startY = y - state.ty; overlay.style.cursor = 'grabbing';
+  };
+  const onMove = (x, y) => {
+    if (!state.panning) return; state.tx = x - state.startX; state.ty = y - state.startY; apply();
+  };
+  const onUp = () => { state.panning = false; overlay.style.cursor = 'grab'; };
+
+  // Mouse
+  overlay.addEventListener('mousedown', (e) => onDown(e.clientX, e.clientY));
+  window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+  window.addEventListener('mouseup', onUp);
+
+  // Touch (single finger pan)
+  overlay.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) onDown(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+  overlay.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+  overlay.addEventListener('touchend', onUp);
+
+  // Close with Escape or background double click
+  const onKey = (e) => { if (e.key === 'Escape') btnClose.onclick(); };
+  document.addEventListener('keydown', onKey, { once: true });
+}
+
 function setupRealtimeListener() {
   const reportListEl = document.querySelector('.report-list');
   if (!reportListEl) return;
@@ -70,12 +180,12 @@ function setupRealtimeListener() {
             data-remarks="${data.remarks || ''}"
             data-issue="${data.issue || ''}"
             data-position="${data.position || 'Faculty'}">
-          <td data-label="faculty name">${data.fullName}</td>
-          <td data-label="date">${formattedDate}</td>
+          <td data-label="Faculty Name">${data.fullName}</td>
+          <td data-label="Request Date">${formattedDate}</td>
           <td data-label="Room & PC No.">${data.room} - ${data.pc}</td>
-          <td data-label="unit">${data.equipment}</td>
-          <td data-label="status"><span class="status status-span-row">${actionButtons}</span></td>
-          <td data-label="action">
+          <td data-label="Unit">${data.equipment}</td>
+          <td data-label="Status"><span class="status status-span-row">${actionButtons}</span></td>
+          <td data-label="Action">
             <span class="view-details td-name-clickable">
               <i class='bx bx-info-circle'></i> View Details
             </span>
@@ -169,6 +279,13 @@ function attachModalAndActionListeners() {
           modal.classList.remove('active');
         }
       });
+
+      // Enable fullscreen zoomable view on image click
+      const modalImg = modal.querySelector('.report-image');
+      if (modalImg) {
+        modalImg.style.cursor = 'zoom-in';
+        modalImg.addEventListener('click', () => openImageViewer(imageSrc));
+      }
     });
   });
 }
