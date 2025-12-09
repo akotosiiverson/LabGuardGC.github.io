@@ -4,6 +4,9 @@
 
 /* Base styles for mobile devices first */
 @media only screen and (max-width: 600px) {
+        .dashboard{
+        margin: 25px;
+    }
     /* Convert sidebar to bottom navigation */
     .sidebar {
         position: fixed;
@@ -257,10 +260,16 @@
         font-size: 7px;
         letter-spacing: -0.5px;
     }
+    .dashboard{
+        margin: 25px;
+    }
 }
 
 /* Specific styles for 500px viewport */
 @media only screen and (min-width: 476px) and (max-width: 500px) {
+        .dashboard{
+        margin: 25px;
+    }
     .summary-cards {
         gap: 8px;
         padding: 0 8px;
@@ -319,6 +328,9 @@
     .summary-card:last-child h3 {
         font-size: 11px;
     }
+        .dashboard{
+        margin: 25px;
+    }
 }
 
 /* Tablet styles */
@@ -366,6 +378,9 @@
         font-size: 12px;
         letter-spacing: -0.3px;
     }
+        .dashboard{
+        margin: 25px;
+    }
 }
 
 /* Desktop styles */
@@ -382,5 +397,8 @@
         font-size: 12px;
         letter-spacing: -0.3px; /* Tighter letter spacing */
         line-height: 1.1;
+    }
+        .dashboard{
+        margin: 25px;
     }
 }

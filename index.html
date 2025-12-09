@@ -69,7 +69,7 @@
         </div>
 
         <div class="account-help">
-          <p><a href="signUp.html">Need an account?</a> Please contact the lab administrator.</p>
+          <a href="signUp.html">Need an account?</a>
         </div>
       </div>
     </div>
@@ -137,6 +137,15 @@
     document.addEventListener("DOMContentLoaded", function () {
       const togglePassword = document.getElementById("togglePassword");
       const password = document.getElementById("password");
+
+      // Apply saved theme preference (default: light)
+      try {
+        const saved = localStorage.getItem('dark-mode');
+        if (saved === 'true') document.body.classList.add('dark');
+        else document.body.classList.remove('dark');
+      } catch (e) {
+        // ignore localStorage errors
+      }
 
       togglePassword.addEventListener("click", function () {
         const type = password.getAttribute("type") === "password" ? "text" : "password";

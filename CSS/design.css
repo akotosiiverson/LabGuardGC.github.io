@@ -32,7 +32,7 @@ li {
     --color-white-rgb: 255, 255, 255; /* RGB version for transparency */
     --color-primary: #FF6A1A; /* Orange as primary color */
     --color-primary-light: #FFE0D3;
-    --color-gray-light: #e3e3e3; /* Lighter gray for better contrast */
+    --color-gray-light: #eee; /* Lighter gray for better contrast */
     --color-gray: #AAAAAA;
     --color-dark: #342E37;
     --color-danger: #DB504A;
@@ -56,6 +56,7 @@ li {
 body {
     background: var(--color-gray-light);
     overflow-x: hidden;
+    
 }
 
 /* Dark theme styles */
@@ -73,10 +74,16 @@ body.dark {
     --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* Force background in dark mode (overrides inline styles) */
+body.dark {
+  background-color: var(--color-gray-light) !important;
+}
+
 /* Dark mode request status*/
 body.dark .request-status-header {
     background: var(--color-primary);
     color: #FFF;
+    
 }
 
 body.dark .request-table th {
@@ -115,6 +122,9 @@ body.dark .activity__table-container {
 body.dark .activity__table th {
     background-color: #393939;
     color: #ffffff;
+}
+body.dark .avlbl-item-text  {
+    color: var(--color-accent);
 }
 
 
@@ -280,6 +290,8 @@ body.dark .activity__table th {
     width: calc(100% - 280px);
     left: 280px;
     transition: var(--transition-speed) ease;
+    background-color: var(--color-gray-light)
+
 }
 
 /* Adjust content width when sidebar is collapsed */
@@ -360,6 +372,7 @@ body.dark .activity__table th {
     font-weight: 600;
     font-size: 16px;
     display: flex;
+    
     justify-content: center;
     align-items: center;
     
@@ -694,6 +707,7 @@ body.dark .empty-state__message {
 body.dark .empty-state__hint {
     color: var(--color-gray-light);
 }
+
 
 /* Mobile responsive empty state */
 @media only screen and (max-width: 767px) {

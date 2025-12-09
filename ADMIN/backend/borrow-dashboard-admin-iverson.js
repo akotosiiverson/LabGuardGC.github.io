@@ -118,8 +118,8 @@ async function displayItems() {
                   <img src="${img}" alt="Item Image" class="report-image" style="max-width: 100%; height: auto; margin-top: 10px;">
                 </div>
                 <div class="detail-row">
-                  <button class="delete-button">Delete</button>
-                  <button class="edit-button">Save</button>
+                  <button class="delete-button" style="margin:3px;">Delete</button>
+                  <button class="edit-button" style="margin:3px;">Save</button>
                 </div>
               </div>
             </div>
