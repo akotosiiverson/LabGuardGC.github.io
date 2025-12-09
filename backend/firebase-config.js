@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBvPjYdsbnuNtup1b1gnDDBlhMUJQt47qw",
@@ -12,20 +12,31 @@ const firebaseConfig = {
   measurementId: "G-YNNB1TT15X"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+// Initialize Cloud Storage and Firestore
+export const storage = getStorage(app);
 export const db = getFirestore(app);
-const storage = getStorage(app);
 
 // Add the report function
-export async function addReport(statusReport, equipment, issue, pc, room, date, imageFile) {
+export async function addReport(equipment, issue, pc, room, statusReport, imageFile, submitterName, submitterId) {
   try {
     let imageUrl = null;
 
-    // If an image file is provided, upload it to Firebase Storage
-    if (imageFile) {
-      const storageRef = ref(storage, `report-images/${Date.now()}_${imageFile.name}`);
-      const snapshot = await uploadBytes(storageRef, imageFile);
+    // Only attempt upload when a real File was provided
+    if (imageFile instanceof File) {
+      const rawName = (imageFile.name || 'report-image').toString();
+      const safeName = rawName.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+      const path = `report-images/${Date.now()}_${safeName}`;
+
+      const storageRef = ref(storage, path);
+      const metadata = { contentType: imageFile.type || 'application/octet-stream' };
+
+      const snapshot = await uploadBytes(storageRef, imageFile, metadata);
       imageUrl = await getDownloadURL(snapshot.ref);
+    } else {
+      // no file provided — proceed without image upload
+      console.debug('addReport: no image file provided, skipping upload');
     }
 
     // Add the report to Firestore
@@ -34,16 +45,18 @@ export async function addReport(statusReport, equipment, issue, pc, room, date, 
       issue,
       pc,
       room,
-      date,
+      date: new Date().toISOString(),
       imageUrl,
       statusReport,
+      submitterName: submitterName || null,
+      submitterId: submitterId || null,
       timestamp: serverTimestamp()
     });
 
     return docRef.id;
-  } catch (e) {
-    console.error("Error adding report:", e);
-    throw e;
+  } catch (err) {
+    console.error("Error adding report: ", err);
+    throw err;
   }
 }
 

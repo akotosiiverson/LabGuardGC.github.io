@@ -10,18 +10,30 @@ const db = getFirestore();
 
 export function printYourrequestInfo() {
   const requestButton = document.querySelector('.js-submit-button-report');
-  const roomNumber = document.querySelector('.room-number');
-  const pcNumber = document.querySelector('.pc-number');
-  const issue = document.querySelector('.issue');
-  const imageInput = document.querySelector('#upload-report-image');
-  const errorMessage = document.querySelector('#error-message');
-  const agreementError = document.querySelector('#agreement-error');
-  const checkButton = document.querySelector('.report-agree-checkbox');
+  if (!requestButton) return; // no active popup
+
+  // scope all element queries to the popup container to avoid global collisions
+  const container = requestButton.closest('.container') || document;
+  const roomNumber = container.querySelector('.room-number');
+  const pcNumber = container.querySelector('.pc-number');
+  const issue = container.querySelector('.issue');
+  const imageInput = container.querySelector('#upload-report-image');
+  const errorMessage = container.querySelector('#error-message');
+  const agreementError = container.querySelector('#agreement-error') || container.querySelector('.agreement-error');
+  const checkButton = container.querySelector('#report-agree-checkbox') || container.querySelector('.report-agree-checkbox');
   const statusReport = 'Pending';
+  // product name comes from the button dataset placed by the dashboard template
+  const productName = requestButton.dataset.productName || container.querySelector('[data-product-name]')?.dataset.productName || null;
+  // current user info (may be null if not signed in)
+  const currentUser = auth.currentUser || null;
+  const fullName = currentUser ? (currentUser.displayName || currentUser.email || null) : null;
+  const userId = currentUser ? currentUser.uid : null;
 
   if (requestButton) {
     requestButton.addEventListener('click', async (e) => {
       e.preventDefault();
+      console.debug('Report submit clicked', { productName, userId, fullName });
+
       // Validate form fields and show all applicable errors (don't return early)
       let hasError = false;
 
@@ -62,91 +74,35 @@ export function printYourrequestInfo() {
 
       if (hasError) return;
 
-      // Validate file size (5MB limit)
-      const imageFile = imageInput.files[0];
-      if (imageFile && imageFile.size > 5 * 1024 * 1024) { // 5MB in bytes
-        errorMessage.classList.add('show');
-        errorMessage.querySelector('span').textContent = 'Image file size must be less than 5MB.';
-        
-        // Hide error message after 3 seconds
-        setTimeout(() => {
-          errorMessage.classList.remove('show');
-        }, 3000);
+      const imageFile = imageInput?.files?.[0] || null;
+      if (imageFile && imageFile.size > 5 * 1024 * 1024) {
+        showFieldError('Image file size must be less than 5MB.');
         return;
       }
 
-      if (roomNumber.value && pcNumber.value && issue.value) {
-        const productName = requestButton.dataset.productName;
-
-        // Get current user displayName and uid asynchronously
-            const { fullName, userId } = await new Promise((resolve, reject) => {
-          const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            unsubscribe(); // ✅ prevent multiple calls
-        
-            if (!user) {
-              alert("You must be logged in to submit a borrow request.");
-              return reject("User not logged in");
-            }
-        
-            try {
-              const userDocRef = doc(db, "users", user.uid);
-              const userDocSnap = await getDoc(userDocRef);
-        
-              const fullNameFromFirestore = userDocSnap.exists() ? userDocSnap.data().fullName : null;
-              const nameToUse = fullNameFromFirestore || user.displayName || "Anonymous";
-        
-              resolve({
-                fullName: nameToUse,
-                userId: user.uid,
-              });
-            } catch (error) {
-              console.error("Error fetching user doc:", error);
-              reject("Error fetching user doc");
-            }
-          });
-        });
-        console.log(`User: ${fullName}, ID: ${userId}`);
-        // Call addReport with all info including fullName and userId
-        await addReport(
+      try {
+        console.debug('Calling addReport', { productName, imageFileProvided: !!imageFile });
+        const docId = await addReport(
           productName,
           issue.value,
           +pcNumber.value,
           +roomNumber.value,
           statusReport,
-          imageFile || null,
-          fullName ,
-          userId // <-- added userId here
+          imageFile,   // may be null — upload skipped in firebase-config.js
+          fullName,
+          userId
         );
+        console.info('Report added, id=', docId);
 
-        // Hide modal after successful submission
-        document.querySelector('.container').style.display = 'none';
-
-        // Re-enable report buttons
-        document.querySelectorAll('.rqst-btn').forEach((btn) => {
-          btn.disabled = false;
-        });
-        document.querySelector('.available-item').classList.remove('no-scroll');
-
-        console.log(`Report submitted by ${fullName} on ${dayjs().format('MMMM D, YYYY')}`);
-
-      } else {
-        console.warn('Please fill in all fields before submitting.');
+        // success: hide popup and restore UI
+        const popup = requestButton.closest('.container');
+        if (popup) popup.remove();
+        document.querySelectorAll('.rqst-btn').forEach((btn) => btn.disabled = false);
+        document.querySelector('.available-item')?.classList.remove('no-scroll');
+      } catch (uploadErr) {
+        console.error('Report submission failed:', uploadErr);
+        showFieldError('Failed to submit report. Please try again or contact admin.');
       }
-    });
-  }
-
-  // Close button logic
-  const closeButton = document.querySelector('.close-button');
-  const container = document.querySelector('.container');
-  if (closeButton && container) {
-    closeButton.addEventListener('click', () => {
-      container.style.display = 'none';
-
-      // Re-enable report buttons on close
-      document.querySelectorAll('.rqst-btn').forEach((btn) => {
-        btn.disabled = false;
-      });
-      document.querySelector('.available-item').classList.remove('no-scroll');
     });
   }
 }
