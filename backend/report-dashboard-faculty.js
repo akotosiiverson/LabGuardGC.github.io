@@ -49,7 +49,7 @@ items.sort((a, b) => {
       `;
     });
 /*
-    const othersData = { id: 13, name: 'OTHERS', image: 'ADMIN/asset/icons/others-icon.png' };
+    const othersData = { id: 13, name: 'OTHERS', image: '/ADMIN/asset/icons/others-icon.png' };
     const addItemHTML = `
       <div class="item-container">
         <div class="img-container">
@@ -70,7 +70,7 @@ items.sort((a, b) => {
         // Handle "OTHERS" case
         /*
         if (!product && +button.dataset.itemId === 13) {
-          product = { id: 13, name: 'OTHERS', image: 'ADMIN/asset/icons/others-icon.png' };
+          product = { id: 13, name: 'OTHERS', image: '/ADMIN/asset/icons/others-icon.png' };
         }
           */
         console.log(product);
