@@ -5,9 +5,7 @@ import {
   collection,
   getDocs,
   addDoc,
-  serverTimestamp,
-  doc,
-  getDoc
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getStorage,
@@ -21,39 +19,6 @@ import {
   db,
 } from "./firebase-config.js";
 const itemMap = {}; // Store items for quick lookup
-
-// Default text if admin hasn't configured anything yet
-const defaultNoticeText = "This report form is intended for reporting any issues with laboratory equipment at Gordon College. If you encounter a problem, please complete the form with accurate details to ensure timely inspection and resolution by the Management Information Unit (MIS).";
-
-function escapeHtml(input) {
-  return input
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-async function getReportNoticeText() {
-  try {
-    const ref = doc(db, 'formTexts', 'borrowForm');
-    const snap = await getDoc(ref);
-    if (snap.exists() && snap.data().noticeText) return String(snap.data().noticeText);
-    return defaultNoticeText;
-  } catch (err) {
-    console.error('Failed to load notice text:', err);
-    return defaultNoticeText;
-  }
-}
-
-function buildNoticeHtml(text) {
-  const safeText = escapeHtml(text);
-  return `
-            <div class="notice">
-              <strong>Important Information:</strong>
-              <p>${safeText}</p>
-            </div>`;
-}
 
 async function displayItems() {
   try {
@@ -99,7 +64,7 @@ items.sort((a, b) => {
     document.querySelector('.available-item').innerHTML = itemHTML;
 
     document.querySelectorAll('.rqst-btn').forEach((button) => {
-      button.addEventListener('click', async () => {
+      button.addEventListener('click', () => {
        const itemId = button.dataset.itemId;
       const product = itemMap[itemId];
         // Handle "OTHERS" case
@@ -113,8 +78,6 @@ items.sort((a, b) => {
           btn.disabled = true;
         });
         document.querySelector('.available-item').classList.add('no-scroll');
-
-        const noticeHtml = buildNoticeHtml(await getReportNoticeText());
 
         let formHTML = `
           <button class="close-button js-close-button">
@@ -180,7 +143,10 @@ items.sort((a, b) => {
             <h2><u>REPORT FORM</u></h2>
             <img src="${product.image}" data-report-image="${product.image}" alt="${product.name}" class="tv-icon report-image" />
             <p class="tv-label">${product.name}</p>
-            ${noticeHtml}
+            <div class="notice">
+              <strong>Important Information:</strong>
+              <p>This report form is intended for reporting any issues with laboratory equipment at Gordon College. If you encounter a problem, please complete the form with accurate details to ensure timely inspection and resolution by the Management Information Unit (MIS).</p>
+            </div>
             <!-- Terms & Policy Modal -->
        
 
